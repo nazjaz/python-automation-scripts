@@ -1,0 +1,52 @@
+itinerary:
+  default_timezone: "UTC"
+  reminder_hours_before: [72, 24, 2]
+  update_interval_minutes: 30
+  output_format: ["html", "pdf"]
+  output_directory: "itineraries"
+
+flights:
+  api_provider: "amadeus"
+  api_key: "${FLIGHT_API_KEY}"
+  api_secret: "${FLIGHT_API_SECRET}"
+  default_currency: "USD"
+  check_in_reminder_hours: 24
+  gate_change_notification: true
+
+hotels:
+  api_provider: "booking"
+  api_key: "${HOTEL_API_KEY}"
+  default_currency: "USD"
+  check_in_reminder_hours: 24
+  check_out_reminder_hours: 2
+
+activities:
+  api_provider: "tripadvisor"
+  api_key: "${ACTIVITY_API_KEY}"
+  default_currency: "USD"
+  reminder_hours_before: 2
+
+notifications:
+  email:
+    enabled: true
+    smtp_host: "${SMTP_HOST}"
+    smtp_port: "${SMTP_PORT}"
+    smtp_username: "${SMTP_USERNAME}"
+    smtp_password: "${SMTP_PASSWORD}"
+    from_email: "${SMTP_FROM_EMAIL}"
+    from_name: "Travel Itinerary Service"
+  sms:
+    enabled: false
+    provider: "twilio"
+    api_key: "${SMS_API_KEY}"
+    api_secret: "${SMS_API_SECRET}"
+    from_number: "${SMS_FROM_NUMBER}"
+
+database:
+  url: "sqlite:///itineraries.db"
+
+logging:
+  file: "logs/itinerary.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

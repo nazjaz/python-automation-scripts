@@ -1,0 +1,14 @@
+python-dotenv==1.0.0  # Environment variable management
+pydantic==2.5.0  # Data validation and settings management
+pydantic-settings==2.1.0  # Settings management for Pydantic
+pyyaml==6.0.1  # YAML configuration file parsing
+sqlalchemy==2.0.23  # Database ORM for storing itineraries
+jinja2==3.1.2  # Template engine for itinerary generation
+requests==2.31.0  # HTTP library for API calls
+python-dateutil==2.8.2  # Date and time utilities
+pytz==2023.3  # Timezone handling
+schedule==1.2.0  # Task scheduling for reminders
+reportlab==4.0.7  # PDF generation for itineraries
+pytest==7.4.3  # Testing framework
+pytest-cov==4.1.0  # Test coverage reporting
+pytest-mock==3.12.0  # Mocking for tests
