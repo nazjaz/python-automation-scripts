@@ -1,0 +1,90 @@
+databases:
+  - name: "primary_db"
+    type: "postgresql"
+    connection_string: "${PRIMARY_DB_URL}"
+    enabled: true
+  - name: "secondary_db"
+    type: "mysql"
+    connection_string: "${SECONDARY_DB_URL}"
+    enabled: true
+
+quality_checks:
+  completeness:
+    enabled: true
+    threshold: 0.95
+    check_null_percentage: true
+    check_empty_strings: true
+  
+  consistency:
+    enabled: true
+    threshold: 0.90
+    check_foreign_keys: true
+    check_referential_integrity: true
+    check_data_types: true
+  
+  accuracy:
+    enabled: true
+    threshold: 0.85
+    check_format_validation: true
+    check_range_validation: true
+    check_pattern_matching: true
+  
+  uniqueness:
+    enabled: true
+    threshold: 0.98
+    check_primary_keys: true
+    check_unique_constraints: true
+    check_duplicate_records: true
+  
+  timeliness:
+    enabled: true
+    threshold: 0.80
+    check_data_freshness_days: 7
+    check_update_frequency: true
+
+tables:
+  - name: "users"
+    database: "primary_db"
+    checks:
+      - type: "completeness"
+        columns: ["email", "name", "created_at"]
+      - type: "uniqueness"
+        columns: ["email", "username"]
+      - type: "accuracy"
+        columns:
+          - name: "email"
+            pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          - name: "age"
+            min: 0
+            max: 150
+  - name: "orders"
+    database: "primary_db"
+    checks:
+      - type: "completeness"
+        columns: ["order_id", "user_id", "total_amount", "created_at"]
+      - type: "consistency"
+        foreign_keys:
+          - column: "user_id"
+            references_table: "users"
+            references_column: "id"
+      - type: "accuracy"
+        columns:
+          - name: "total_amount"
+            min: 0
+            min_inclusive: true
+
+reporting:
+  output_format: ["html", "json", "excel"]
+  output_directory: "reports"
+  include_remediation: true
+  scorecard_template: "templates/scorecard.html"
+  email_notification:
+    enabled: false
+    recipients: []
+    threshold: 0.70
+
+logging:
+  file: "logs/data_quality.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
