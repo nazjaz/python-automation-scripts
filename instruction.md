@@ -1,8 +1,29 @@
 # Python Automation Project Standards and Guidelines
 
-## Project Structure
+## Repository Structure
 
-All automation projects must follow a consistent, single-folder structure:
+This repository contains multiple independent Python automation projects. Each project must be placed in its own separate folder at the repository root level to ensure proper separation of concerns.
+
+### Repository Layout
+
+```
+python-automation-scripts/
+├── README.md
+├── instruction.md
+├── LICENSE
+├── file-organizer/
+│   └── [project files]
+├── email-backup/
+│   └── [project files]
+├── price-monitor/
+│   └── [project files]
+└── [other automation projects]/
+    └── [project files]
+```
+
+### Individual Project Structure
+
+Each automation project must follow a consistent, self-contained folder structure:
 
 ```
 project-name/
@@ -21,9 +42,14 @@ project-name/
     └── .gitkeep
 ```
 
-- All code, configuration, and documentation must reside within a single project folder
-- No scattered files across multiple directories
-- Each project is self-contained and portable
+### Separation of Concerns
+
+- Each automation project must be in its own separate folder at the repository root
+- Project folders should be named descriptively using kebab-case (e.g., `file-organizer`, `email-backup`, `price-monitor`)
+- All code, configuration, and documentation for a project must reside within that project's folder
+- No shared code or dependencies between projects at the file level
+- Each project is completely self-contained and portable
+- Projects should not reference files outside their own directory structure
 
 ## Git Commit Message Standards
 
@@ -388,6 +414,8 @@ from src.utils import validate_path
 
 ## Checklist Before Submission
 
+- [ ] Project is in its own separate folder at repository root level
+- [ ] Folder name uses kebab-case and is descriptive
 - [ ] All code follows PEP 8
 - [ ] Type hints added to all functions
 - [ ] Docstrings for all public functions and classes
@@ -400,7 +428,8 @@ from src.utils import validate_path
 - [ ] Code is commented where necessary (explaining why, not what)
 - [ ] No emojis or casual language
 - [ ] Professional documentation
-- [ ] All files in single project folder
+- [ ] All project files contained within project folder
+- [ ] No dependencies on files outside project folder
 - [ ] .gitignore properly configured
 
 ## Additional Resources
