@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 0 0 5px 5px;
+        }
+        .refund-details {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .amount {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            margin: 15px 0;
+        }
+        td {
+            padding: 8px;
+        }
+        .label {
+            font-weight: bold;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Refund Confirmation</h1>
+    </div>
+    <div class="content">
+        <p>Dear {{ customer_name }},</p>
+        
+        <p>Your refund request for Order <strong>{{ order_id }}</strong> has been processed successfully.</p>
+        
+        <div class="refund-details">
+            <h3>Refund Details</h3>
+            <table>
+                <tr>
+                    <td class="label">Order ID:</td>
+                    <td>{{ order_id }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Refund Amount:</td>
+                    <td>{{ currency }}{{ "%.2f"|format(refund_amount) }}</td>
+                </tr>
+                {% if restocking_fee > 0 %}
+                <tr>
+                    <td class="label">Restocking Fee:</td>
+                    <td>{{ currency }}{{ "%.2f"|format(restocking_fee) }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td class="label">Net Refund Amount:</td>
+                    <td class="amount">{{ currency }}{{ "%.2f"|format(net_refund_amount) }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Reason:</td>
+                    <td>{{ refund_reason }}</td>
+                </tr>
+            </table>
+        </div>
+        
+        <p>The refund will be processed to your original payment method within 5-10 business days. You will receive a notification once the refund has been completed.</p>
+        
+        <p>If you have any questions or concerns about this refund, please contact our support team.</p>
+        
+        <p>Thank you for your patience,<br>
+        Refund Processing Team</p>
+    </div>
+    <div class="footer">
+        <p>This is an automated message. Please do not reply to this email.</p>
+    </div>
+</body>
+</html>

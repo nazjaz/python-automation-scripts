@@ -1,0 +1,54 @@
+refund_policies:
+  max_refund_days: 90
+  min_refund_amount: 1.00
+  max_refund_amount: 10000.00
+  auto_approve_threshold: 50.00
+  require_approval_above: 500.00
+  refund_reasons:
+    - "defective_product"
+    - "not_as_described"
+    - "wrong_item"
+    - "damaged_during_shipping"
+    - "customer_request"
+    - "duplicate_charge"
+    - "cancellation"
+  partial_refund_allowed: true
+  restocking_fee_percentage: 0.10
+  restocking_fee_minimum: 5.00
+
+payment_systems:
+  primary:
+    provider: "stripe"
+    api_key: "${STRIPE_API_KEY}"
+    api_secret: "${STRIPE_SECRET_KEY}"
+    enabled: true
+  secondary:
+    provider: "paypal"
+    api_key: "${PAYPAL_CLIENT_ID}"
+    api_secret: "${PAYPAL_SECRET}"
+    enabled: false
+
+validation:
+  require_order_id: true
+  require_customer_email: true
+  validate_order_exists: true
+  validate_customer_match: true
+  check_duplicate_refunds: true
+  max_refunds_per_order: 3
+
+email:
+  confirmation_template: "templates/refund_confirmation.html"
+  subject: "Refund Confirmation - Order {{order_id}}"
+  from_email: "${SMTP_FROM_EMAIL}"
+  from_name: "Refund Processing Team"
+  retry_attempts: 3
+  retry_delay_seconds: 5
+
+database:
+  url: "sqlite:///refunds.db"
+
+logging:
+  file: "logs/refund_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
