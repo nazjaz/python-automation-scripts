@@ -1,0 +1,36 @@
+email:
+  welcome_template: "templates/welcome_email.html"
+  subject: "Welcome to {{company_name}}"
+  retry_attempts: 3
+  retry_delay_seconds: 5
+
+onboarding:
+  steps:
+    - name: "welcome_email"
+      required: true
+      order: 1
+    - name: "account_setup"
+      required: true
+      order: 2
+    - name: "resource_assignment"
+      required: true
+      order: 3
+    - name: "initial_training"
+      required: false
+      order: 4
+  completion_threshold: 0.75
+  tracking_interval_hours: 24
+
+resources:
+  default_assignments:
+    - type: "documentation_access"
+      name: "User Guide"
+    - type: "support_access"
+      name: "Priority Support"
+  assignment_api_timeout: 30
+
+logging:
+  file: "logs/onboarding.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
