@@ -4,7 +4,7 @@ A collection of production-ready Python automation scripts for various tasks and
 
 ## Overview
 
-This repository contains independent Python automation projects, each designed to solve specific automation challenges. All projects adhere to strict coding standards, comprehensive documentation, and best practices outlined in the [instruction.md](instruction.md) file.
+This repository contains independent Python automation projects, each designed to solve specific automation challenges. All projects adhere to strict coding standards, comprehensive documentation, and professional best practices.
 
 ## Repository Structure
 
@@ -13,7 +13,6 @@ Each automation project is organized in its own separate folder at the repositor
 ```
 python-automation-scripts/
 ├── README.md                 # This file
-├── instruction.md            # Project standards and guidelines
 ├── LICENSE                   # MIT License
 ├── project-name-1/           # Individual automation project
 │   ├── README.md
@@ -86,14 +85,12 @@ All projects in this repository follow strict development standards:
 - **Security**: No hardcoded secrets, environment variables for sensitive data
 - **Professional**: No emojis, no casual language, expert-level code
 
-For complete guidelines, see [instruction.md](instruction.md).
-
 ## Contributing
 
 When adding a new automation project to this repository:
 
 1. Create a new folder at the repository root with a descriptive name (kebab-case)
-2. Follow the project structure outlined in [instruction.md](instruction.md)
+2. Follow the standard project structure (see Repository Structure above)
 3. Ensure all code follows the standards and guidelines
 4. Include comprehensive documentation and tests
 5. Commit with conventional commit messages
