@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>License Monitoring Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #4a90e2;
+            margin-top: 30px;
+        }
+        .savings {
+            font-size: 2em;
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #d4edda;
+            border-radius: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .compliant {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .non-compliant {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .priority-high {
+            background-color: #f8d7da;
+        }
+        .priority-medium {
+            background-color: #fff3cd;
+        }
+        .priority-low {
+            background-color: #d1ecf1;
+        }
+        .metadata {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>License Monitoring Report</h1>
+        
+        <div class="metadata">
+            <p><strong>Generated At:</strong> {{ generated_at.isoformat() }}</p>
+            <p><strong>Total License Types:</strong> {{ compliance_records|length }}</p>
+            <p><strong>Total Recommendations:</strong> {{ recommendations|length }}</p>
+        </div>
+        
+        {% if total_savings > 0 %}
+        <div class="savings">
+            Total Potential Annual Savings: ${{ "%.2f"|format(total_savings) }}
+        </div>
+        {% endif %}
+        
+        <h2>Compliance Status</h2>
+        <table>
+            <tr>
+                <th>License Type</th>
+                <th>Total Licenses</th>
+                <th>Assigned</th>
+                <th>Unused</th>
+                <th>Compliance %</th>
+                <th>Status</th>
+            </tr>
+            {% for record in compliance_records %}
+            <tr>
+                <td>{{ record.license_type }}</td>
+                <td>{{ record.total_licenses }}</td>
+                <td>{{ record.assigned_licenses }}</td>
+                <td>{{ record.unused_licenses }}</td>
+                <td>{{ "%.2f"|format(record.compliance_percentage * 100) }}%</td>
+                <td class="{% if record.status == 'compliant' %}compliant{% else %}non-compliant{% endif %}">
+                    {{ record.status }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        {% if recommendations %}
+        <h2>Optimization Recommendations</h2>
+        <table>
+            <tr>
+                <th>License Type</th>
+                <th>Recommendation Type</th>
+                <th>Description</th>
+                <th>Estimated Savings</th>
+                <th>Priority</th>
+            </tr>
+            {% for rec in recommendations %}
+            <tr class="priority-{{ rec.priority }}">
+                <td>{{ rec.license_type }}</td>
+                <td>{{ rec.recommendation_type }}</td>
+                <td>{{ rec.description }}</td>
+                <td>${{ "%.2f"|format(rec.estimated_savings) }}</td>
+                <td>{{ rec.priority }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        
+        <div class="metadata" style="margin-top: 30px;">
+            <p><em>This report was generated automatically. Review recommendations carefully before implementing changes.</em></p>
+        </div>
+    </div>
+</body>
+</html>

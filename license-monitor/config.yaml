@@ -1,0 +1,70 @@
+license_sources:
+  - name: "active_directory"
+    type: "ldap"
+    enabled: true
+    connection_string: "${AD_CONNECTION_STRING}"
+    sync_interval_hours: 24
+  
+  - name: "snow"
+    type: "api"
+    enabled: true
+    api_url: "${SNOW_API_URL}"
+    api_key: "${SNOW_API_KEY}"
+    sync_interval_hours: 12
+  
+  - name: "manual_import"
+    type: "csv"
+    enabled: true
+    file_path: "data/licenses.csv"
+
+monitoring:
+  compliance_check_interval_hours: 24
+  usage_tracking_interval_hours: 6
+  unused_license_threshold_days: 90
+  compliance_threshold_percentage: 0.95
+
+license_types:
+  - name: "Microsoft Office"
+    category: "productivity"
+    cost_per_license: 150.00
+    currency: "USD"
+    compliance_required: true
+  
+  - name: "Adobe Creative Cloud"
+    category: "design"
+    cost_per_license: 52.99
+    currency: "USD"
+    compliance_required: true
+  
+  - name: "Slack"
+    category: "communication"
+    cost_per_license: 7.25
+    currency: "USD"
+    compliance_required: false
+
+optimization:
+  identify_unused: true
+  identify_over_licensed: true
+  cost_savings_threshold: 100.00
+  recommend_downgrades: true
+
+reporting:
+  output_format: ["html", "json", "excel"]
+  output_directory: "reports"
+  include_cost_analysis: true
+  include_compliance_status: true
+  include_optimization_recommendations: true
+  report_template: "templates/license_report.html"
+  email_notification:
+    enabled: false
+    recipients: []
+    threshold_cost_savings: 1000.00
+
+database:
+  url: "sqlite:///license_monitor.db"
+
+logging:
+  file: "logs/license_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
