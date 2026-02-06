@@ -1,0 +1,85 @@
+portfolio:
+  default_currency: "USD"
+  min_investment: 100.00
+  max_holdings: 20
+  rebalancing_threshold: 0.05
+  rebalancing_frequency_days: 90
+
+risk_tolerance:
+  levels:
+    - "conservative"
+    - "moderate"
+    - "aggressive"
+  conservative_allocation:
+    stocks: 0.30
+    bonds: 0.50
+    cash: 0.20
+  moderate_allocation:
+    stocks: 0.60
+    bonds: 0.30
+    cash: 0.10
+  aggressive_allocation:
+    stocks: 0.80
+    bonds: 0.15
+    cash: 0.05
+
+asset_classes:
+  stocks:
+    - "large_cap"
+    - "mid_cap"
+    - "small_cap"
+    - "international"
+    - "emerging_markets"
+  bonds:
+    - "government"
+    - "corporate"
+    - "municipal"
+    - "international"
+  alternatives:
+    - "real_estate"
+    - "commodities"
+    - "cryptocurrency"
+
+financial_goals:
+  goal_types:
+    - "retirement"
+    - "education"
+    - "house_purchase"
+    - "emergency_fund"
+    - "wealth_building"
+  time_horizons:
+    short_term: 365
+    medium_term: 1825
+    long_term: 3650
+
+market_conditions:
+  update_frequency_hours: 24
+  volatility_threshold: 0.20
+  bear_market_threshold: -0.20
+  bull_market_threshold: 0.20
+
+rebalancing:
+  enabled: true
+  check_interval_days: 30
+  drift_threshold: 0.05
+  tax_aware: false
+  min_rebalance_amount: 100.00
+
+optimization:
+  method: "modern_portfolio_theory"
+  risk_free_rate: 0.02
+  expected_returns_source: "historical"
+  correlation_window_days: 252
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_projections: true
+  include_rebalancing: true
+
+logging:
+  file: "logs/portfolio_generator.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
