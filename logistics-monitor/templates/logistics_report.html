@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Monitoring Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #2196F3;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .stat-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 5px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-box.on-time {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .stat-box.delayed {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2196F3;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .priority-urgent {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .priority-high {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .priority-medium {
+            color: #2196F3;
+        }
+        .priority-low {
+            color: #9e9e9e;
+        }
+        .status-in_transit {
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .status-delivered {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #9e9e9e;
+        }
+        .trend-improving {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .trend-declining {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .trend-stable {
+            color: #9e9e9e;
+        }
+        .meta-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Logistics Monitoring Report</h1>
+        <div class="meta-info">
+            <strong>Generated at:</strong> {{ generated_at }}
+        </div>
+
+        <div class="section">
+            <h2>Logistics Summary</h2>
+            <div class="stat-box on-time">
+                <div class="stat-label">On-Time Percentage</div>
+                <div class="stat-value">{{ "%.1f"|format(logistics_summary.on_time_percentage) }}%</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Total Shipments</div>
+                <div class="stat-value">{{ logistics_summary.total_shipments }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Completed</div>
+                <div class="stat-value">{{ logistics_summary.completed_shipments }}</div>
+            </div>
+            <div class="stat-box delayed">
+                <div class="stat-label">Delayed</div>
+                <div class="stat-value">{{ logistics_summary.delayed_deliveries }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Avg Delay</div>
+                <div class="stat-value">{{ "%.1f"|format(logistics_summary.average_delay_hours) }}h</div>
+            </div>
+        </div>
+
+        {% if trends %}
+        <div class="section">
+            <h2>Performance Trends</h2>
+            <div class="stat-box">
+                <div class="stat-label">Trend</div>
+                <div class="stat-value trend-{{ trends.trend }}">{{ trends.trend|title }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Avg On-Time (30 days)</div>
+                <div class="stat-value">{{ "%.1f"|format(trends.average_on_time_percentage) }}%</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if delay_stats %}
+        <div class="section">
+            <h2>Delay Statistics</h2>
+            <div class="stat-box">
+                <div class="stat-label">Total Delays</div>
+                <div class="stat-value">{{ delay_stats.total_delays }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Avg Delay Hours</div>
+                <div class="stat-value">{{ "%.1f"|format(delay_stats.average_delay_hours) }}h</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if active_shipments %}
+        <div class="section">
+            <h2>Active Shipments</h2>
+            <table>
+                <tr>
+                    <th>Shipment ID</th>
+                    <th>Status</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Priority</th>
+                    <th>Estimated Delivery</th>
+                </tr>
+                {% for shipment in active_shipments %}
+                <tr>
+                    <td>{{ shipment.shipment_id }}</td>
+                    <td class="status-{{ shipment.status }}">{{ shipment.status|title }}</td>
+                    <td>{{ shipment.origin }}</td>
+                    <td>{{ shipment.destination }}</td>
+                    <td class="priority-{{ shipment.priority }}">{{ shipment.priority|title }}</td>
+                    <td>{{ shipment.estimated_delivery.strftime('%Y-%m-%d %H:%M') if shipment.estimated_delivery else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if recommendations %}
+        <div class="section">
+            <h2>Route Optimization Recommendations</h2>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Time Savings (hours)</th>
+                    <th>Cost Savings</th>
+                    <th>Priority</th>
+                </tr>
+                {% for rec in recommendations %}
+                <tr>
+                    <td>{{ rec.title }}</td>
+                    <td>{{ rec.recommendation_type|title }}</td>
+                    <td>{{ "%.1f"|format(rec.expected_savings_hours or 0) }}</td>
+                    <td>{{ "%.2f"|format(rec.expected_savings_cost or 0) }}</td>
+                    <td class="priority-{{ rec.priority }}">{{ rec.priority|title }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

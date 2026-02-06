@@ -1,0 +1,31 @@
+tracking:
+  tracking_enabled: true
+
+delay_prediction:
+  delay_factors:
+    weather: 0.3
+    traffic: 0.2
+    customs: 0.25
+    mechanical: 0.15
+    other: 0.1
+
+route_optimization:
+  optimization_factors:
+    distance: 0.4
+    time: 0.4
+    cost: 0.2
+
+monitoring:
+  monitoring_enabled: true
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/logistics_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
