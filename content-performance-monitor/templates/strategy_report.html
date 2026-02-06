@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Strategy Report - {{ platform }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .recommendation {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .recommendation.high {
+            border-left-color: #e74c3c;
+        }
+        .recommendation.medium {
+            border-left-color: #f39c12;
+        }
+        .recommendation.low {
+            border-left-color: #3498db;
+        }
+        .recommendation h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .content-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+        .content-item h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .metric {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .trends {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .trend-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .trend-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .trend-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Content Strategy Report</h1>
+        <p>{{ platform }} - Generated on {{ generated_at }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Summary</h2>
+        <div class="trends">
+            <div class="trend-item">
+                <div class="trend-label">Total Content Items</div>
+                <div class="trend-value">{{ total_content_items }}</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-label">Average Engagement</div>
+                <div class="trend-value">{{ "%.2f"|format(trends.avg_engagement * 100) }}%</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-label">Top Content Type</div>
+                <div class="trend-value">{{ trends.top_content_type or "N/A" }}</div>
+            </div>
+            <div class="trend-item">
+                <div class="trend-label">Best Posting Day</div>
+                <div class="trend-value">{{ trends.best_posting_day or "N/A" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Strategy Recommendations</h2>
+        {% for rec in recommendations %}
+        <div class="recommendation {{ rec.priority }}">
+            <h3>{{ rec.title }}</h3>
+            <p>{{ rec.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h2>Top Performing Content</h2>
+        {% for item in top_content %}
+        <div class="content-item">
+            <h3>{{ item.title or item.content_id }}</h3>
+            <p><strong>Platform:</strong> {{ item.platform }} | <strong>Type:</strong> {{ item.content_type or "N/A" }} | <strong>Posted:</strong> {{ item.posted_at or "N/A" }}</p>
+            <div class="metrics">
+                <div class="metric">
+                    <div class="metric-label">Overall Score</div>
+                    <div class="metric-value">{{ "%.2f"|format(item.overall_score * 100) }}%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Engagement</div>
+                    <div class="metric-value">{{ "%.2f"|format(item.engagement_score * 100) }}%</div>
+                </div>
+                {% if item.views_score %}
+                <div class="metric">
+                    <div class="metric-label">Views Score</div>
+                    <div class="metric-value">{{ "%.2f"|format(item.views_score * 100) }}%</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="footer">
+        <p>Report generated by Content Performance Monitor</p>
+    </div>
+</body>
+</html>

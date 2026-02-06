@@ -1,0 +1,94 @@
+platforms:
+  - name: "facebook"
+    enabled: true
+    metrics:
+      - "likes"
+      - "comments"
+      - "shares"
+      - "views"
+      - "reach"
+    weight:
+      engagement: 0.4
+      reach: 0.3
+      views: 0.3
+  - name: "twitter"
+    enabled: true
+    metrics:
+      - "likes"
+      - "retweets"
+      - "replies"
+      - "views"
+      - "impressions"
+    weight:
+      engagement: 0.5
+      reach: 0.3
+      views: 0.2
+  - name: "instagram"
+    enabled: true
+    metrics:
+      - "likes"
+      - "comments"
+      - "saves"
+      - "views"
+      - "reach"
+    weight:
+      engagement: 0.45
+      reach: 0.25
+      views: 0.3
+  - name: "linkedin"
+    enabled: true
+    metrics:
+      - "likes"
+      - "comments"
+      - "shares"
+      - "views"
+      - "impressions"
+    weight:
+      engagement: 0.4
+      reach: 0.35
+      views: 0.25
+  - name: "youtube"
+    enabled: true
+    metrics:
+      - "likes"
+      - "comments"
+      - "views"
+      - "watch_time"
+      - "subscribers_gained"
+    weight:
+      engagement: 0.3
+      views: 0.4
+      watch_time: 0.3
+
+analysis:
+  top_content_count: 10
+  analysis_period_days: 30
+  engagement_threshold: 0.05
+  min_views_for_analysis: 100
+
+strategy:
+  recommendation_count: 5
+  trend_analysis_days: 7
+  content_types:
+    - "video"
+    - "image"
+    - "text"
+    - "link"
+  optimal_posting_times:
+    - "09:00"
+    - "12:00"
+    - "17:00"
+    - "20:00"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+  email_enabled: false
+
+logging:
+  file: "logs/content_performance.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
