@@ -1,0 +1,144 @@
+sentiment:
+  positive_threshold: 0.1
+  negative_threshold: -0.1
+
+themes:
+  min_theme_length: 2
+  max_themes_per_review: 5
+  theme_categories:
+    quality:
+      - "quality"
+      - "durable"
+      - "sturdy"
+      - "cheap"
+      - "broken"
+      - "defect"
+    performance:
+      - "fast"
+      - "slow"
+      - "performance"
+      - "speed"
+      - "lag"
+      - "responsive"
+    design:
+      - "design"
+      - "look"
+      - "appearance"
+      - "style"
+      - "aesthetic"
+      - "color"
+    customer_service:
+      - "service"
+      - "support"
+      - "help"
+      - "response"
+      - "customer"
+    shipping:
+      - "shipping"
+      - "delivery"
+      - "arrived"
+      - "packaging"
+      - "fast shipping"
+    pricing:
+      - "price"
+      - "expensive"
+      - "affordable"
+      - "value"
+      - "cost"
+
+issues:
+  min_issue_length: 10
+  issue_keywords:
+    quality:
+      - "broken"
+      - "defect"
+      - "faulty"
+      - "poor quality"
+      - "cheap"
+      - "damaged"
+    performance:
+      - "slow"
+      - "lag"
+      - "freeze"
+      - "crash"
+      - "not working"
+    design:
+      - "ugly"
+      - "poor design"
+      - "uncomfortable"
+      - "doesn't fit"
+    customer_service:
+      - "poor service"
+      - "no response"
+      - "unhelpful"
+      - "rude"
+    shipping:
+      - "late delivery"
+      - "damaged package"
+      - "wrong item"
+      - "missing item"
+    pricing:
+      - "overpriced"
+      - "too expensive"
+      - "not worth it"
+  severity_keywords:
+    critical:
+      - "dangerous"
+      - "unsafe"
+      - "fire"
+      - "explode"
+      - "toxic"
+    high:
+      - "broken"
+      - "defect"
+      - "not working"
+      - "useless"
+    low:
+      - "minor"
+      - "slight"
+      - "small issue"
+
+recommendations:
+  priority_weights:
+    critical: 1.0
+    high: 0.7
+    medium: 0.5
+    low: 0.3
+  recommendation_templates:
+    quality:
+      critical: "URGENT: Address critical quality issues immediately. Implement stricter quality control measures and product testing."
+      high: "Improve product quality control processes. Review manufacturing and testing procedures to reduce defects."
+      medium: "Enhance quality assurance processes to address quality concerns."
+      low: "Monitor quality metrics and address minor quality issues."
+    performance:
+      critical: "URGENT: Fix critical performance issues that impact product functionality."
+      high: "Optimize product performance. Address performance bottlenecks and improve responsiveness."
+      medium: "Review and improve product performance based on customer feedback."
+      low: "Monitor performance metrics and make incremental improvements."
+    design:
+      high: "Review product design based on customer feedback. Consider design improvements for better user experience."
+      medium: "Evaluate design elements and consider customer suggestions for design enhancements."
+      low: "Gather more design feedback and plan design iterations."
+    customer_service:
+      high: "Improve customer service processes. Enhance response times and support quality."
+      medium: "Review customer service procedures and train support staff."
+      low: "Monitor customer service metrics and identify improvement opportunities."
+    shipping:
+      high: "Improve shipping and delivery processes. Address delivery delays and packaging issues."
+      medium: "Review shipping procedures and partner relationships."
+      low: "Optimize shipping processes for better customer experience."
+    pricing:
+      medium: "Review pricing strategy. Consider value adjustments based on customer feedback."
+      low: "Analyze pricing competitiveness and customer value perception."
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/review_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
