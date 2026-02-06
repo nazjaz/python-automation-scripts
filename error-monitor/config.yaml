@@ -1,0 +1,135 @@
+parsing:
+  log_format: "standard"
+  timestamp_format: "%Y-%m-%d %H:%M:%S"
+  error_patterns: []
+
+categorization:
+  categories:
+    database:
+      description: "Database connection or query errors"
+      keywords:
+        - "database"
+        - "sql"
+        - "connection"
+        - "query"
+        - "timeout"
+        - "deadlock"
+      patterns:
+        - "connection.*refused"
+        - "timeout.*database"
+      default_severity: "high"
+    authentication:
+      description: "Authentication and authorization errors"
+      keywords:
+        - "authentication"
+        - "authorization"
+        - "unauthorized"
+        - "forbidden"
+        - "login"
+        - "password"
+      patterns:
+        - "unauthorized"
+        - "forbidden"
+        - "invalid.*credentials"
+      default_severity: "high"
+    network:
+      description: "Network and connectivity errors"
+      keywords:
+        - "network"
+        - "connection"
+        - "timeout"
+        - "dns"
+        - "socket"
+        - "refused"
+      patterns:
+        - "connection.*refused"
+        - "timeout"
+        - "network.*error"
+      default_severity: "medium"
+    validation:
+      description: "Input validation errors"
+      keywords:
+        - "validation"
+        - "invalid"
+        - "required"
+        - "format"
+        - "type"
+      patterns:
+        - "invalid.*input"
+        - "validation.*failed"
+      default_severity: "low"
+    application:
+      description: "Application logic errors"
+      keywords:
+        - "null"
+        - "undefined"
+        - "index"
+        - "out of range"
+        - "exception"
+      patterns:
+        - "null.*pointer"
+        - "index.*out.*range"
+      default_severity: "medium"
+    performance:
+      description: "Performance and resource errors"
+      keywords:
+        - "memory"
+        - "cpu"
+        - "slow"
+        - "performance"
+        - "resource"
+      patterns:
+        - "out.*memory"
+        - "performance.*degraded"
+      default_severity: "medium"
+    unknown:
+      description: "Uncategorized errors"
+      default_severity: "medium"
+  severity_rules:
+    keywords:
+      critical:
+        - "fatal"
+        - "critical"
+        - "crash"
+        - "data loss"
+      high:
+        - "error"
+        - "failed"
+        - "exception"
+      medium:
+        - "warning"
+        - "issue"
+      low:
+        - "info"
+        - "notice"
+
+pattern_identification:
+  min_frequency: 3
+  similarity_threshold: 0.8
+
+monitoring:
+  time_window_minutes: 60
+  error_rate_threshold: 1.0
+
+bug_reports:
+  priority_rules:
+    urgent_threshold: 10.0
+    high_threshold: 5.0
+    medium_threshold: 1.0
+  reproduction_template:
+    steps:
+      - "Review error logs"
+      - "Check application state"
+      - "Attempt reproduction"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/error_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
