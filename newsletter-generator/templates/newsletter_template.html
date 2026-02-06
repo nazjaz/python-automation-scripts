@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ newsletter.title }}</title>
+    <style>
+        body {
+            font-family: {{ styling.font_family }};
+            font-size: {{ styling.font_size }};
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, {{ styling.primary_color }} 0%, {{ styling.secondary_color }} 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .content {
+            padding: 30px;
+        }
+        .greeting {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .featured-article {
+            background: #f8f9fa;
+            border-left: 4px solid {{ styling.primary_color }};
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .featured-article h2 {
+            color: {{ styling.primary_color }};
+            margin-top: 0;
+        }
+        .article {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+        }
+        .article:last-child {
+            border-bottom: none;
+        }
+        .article h3 {
+            color: {{ styling.primary_color }};
+            margin-top: 0;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin: 10px 0;
+        }
+        .article-summary {
+            color: #555;
+            margin: 15px 0;
+        }
+        .article-link {
+            display: inline-block;
+            background: {{ styling.primary_color }};
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .personalized-section {
+            background: #e7f3ff;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .personalized-section h3 {
+            color: #17a2b8;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ newsletter.title }}</h1>
+        </div>
+        <div class="content">
+            {% if 'greeting' in sections %}
+            <div class="greeting">
+                {{ personalized.greeting if personalized else "Hello," }}
+            </div>
+            {% endif %}
+
+            {% if featured_article and 'featured_article' in sections %}
+            <div class="featured-article">
+                <h2>{{ featured_article.title }}</h2>
+                {% if featured_article.author %}
+                <div class="article-meta">By {{ featured_article.author }}</div>
+                {% endif %}
+                {% if featured_article.summary %}
+                <div class="article-summary">{{ featured_article.summary }}</div>
+                {% endif %}
+                {% if featured_article.source_url %}
+                <a href="{{ featured_article.source_url }}" class="article-link">Read More</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if 'article_list' in sections %}
+            {% for article in articles %}
+            <div class="article">
+                <h3>{{ article.title }}</h3>
+                {% if article.author %}
+                <div class="article-meta">By {{ article.author }}</div>
+                {% endif %}
+                {% if article.summary %}
+                <div class="article-summary">{{ article.summary }}</div>
+                {% endif %}
+                {% if article.source_url %}
+                <a href="{{ article.source_url }}" class="article-link">Read More</a>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if personalized and personalized.recommended_articles and 'personalized_recommendations' in sections %}
+            <div class="personalized-section">
+                <h3>Recommended for You</h3>
+                {% for article in personalized.recommended_articles %}
+                <div class="article">
+                    <h4>{{ article.title }}</h4>
+                    {% if article.summary %}
+                    <div class="article-summary">{{ article.summary }}</div>
+                    {% endif %}
+                    {% if article.source_url %}
+                    <a href="{{ article.source_url }}" class="article-link">Read More</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="footer">
+            <p>Thank you for subscribing to our newsletter!</p>
+            <p><a href="#">Unsubscribe</a> | <a href="#">Update Preferences</a></p>
+        </div>
+    </div>
+</body>
+</html>

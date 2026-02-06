@@ -1,0 +1,91 @@
+newsletter:
+  default_title: "Newsletter"
+  default_sender_name: "Newsletter Team"
+  default_sender_email: "newsletter@example.com"
+  max_articles_per_newsletter: 10
+  min_articles_per_newsletter: 3
+
+content_curation:
+  article_sources:
+    - "rss_feeds"
+    - "api"
+    - "manual"
+  curation_criteria:
+    - "relevance"
+    - "recency"
+    - "popularity"
+    - "quality_score"
+  min_quality_score: 0.6
+  max_article_age_days: 30
+  relevance_keywords: []
+
+personalization:
+  enabled: true
+  personalization_levels:
+    - "basic"
+    - "moderate"
+    - "advanced"
+  personalize_sections:
+    - "greeting"
+    - "recommended_articles"
+    - "content_order"
+  use_subscriber_preferences: true
+  use_reading_history: true
+  use_demographics: true
+
+layout:
+  template: "templates/newsletter_template.html"
+  sections:
+    - "header"
+    - "greeting"
+    - "featured_article"
+    - "article_list"
+    - "personalized_recommendations"
+    - "footer"
+  styling:
+    primary_color: "#667eea"
+    secondary_color: "#764ba2"
+    font_family: "Arial, sans-serif"
+    font_size: "14px"
+  responsive: true
+
+distribution:
+  scheduling_enabled: true
+  default_send_time: "09:00"
+  timezone: "UTC"
+  batch_size: 100
+  send_methods:
+    - "email"
+    - "api"
+  retry_attempts: 3
+  retry_delay_seconds: 60
+
+segments:
+  segmentation_criteria:
+    - "demographics"
+    - "preferences"
+    - "engagement"
+    - "geography"
+  default_segment: "all"
+  segment_update_frequency_days: 7
+
+email:
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  use_tls: true
+  from_email: "newsletter@example.com"
+  reply_to: "newsletter@example.com"
+
+reporting:
+  generate_html: true
+  generate_pdf: false
+  output_directory: "newsletters"
+  include_analytics: true
+  track_opens: true
+  track_clicks: true
+
+logging:
+  file: "logs/newsletter_generator.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
