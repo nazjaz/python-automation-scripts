@@ -1,0 +1,74 @@
+monitoring:
+  check_interval_hours: 24
+  renewal_check_days_ahead: 30
+  renewal_check_days_past: 7
+  batch_size: 100
+
+churn_detection:
+  enabled: true
+  check_interval_hours: 24
+  risk_factors:
+    payment_failures: 2
+    engagement_score_threshold: 0.3
+    days_since_last_activity: 30
+    support_tickets_threshold: 3
+  risk_levels:
+    low: 0.0
+    medium: 0.4
+    high: 0.7
+    critical: 0.9
+
+retention:
+  campaigns_enabled: true
+  campaign_types:
+    - "email_discount"
+    - "email_engagement"
+    - "phone_call"
+    - "loyalty_reward"
+  trigger_conditions:
+    high_risk_churn: true
+    payment_failure: true
+    engagement_drop: true
+    renewal_reminder: true
+  email_templates:
+    discount_offer: "templates/discount_email.html"
+    engagement: "templates/engagement_email.html"
+    renewal_reminder: "templates/renewal_reminder.html"
+
+subscription:
+  statuses:
+    - "active"
+    - "trial"
+    - "suspended"
+    - "cancelled"
+    - "expired"
+  billing_cycles:
+    - "monthly"
+    - "quarterly"
+    - "annual"
+  auto_renewal_enabled: true
+  grace_period_days: 7
+
+metrics:
+  track_mrr: true
+  track_arr: true
+  track_churn_rate: true
+  track_renewal_rate: true
+  track_lifetime_value: true
+  track_cac: true
+  calculation_window_days: 30
+  cohort_analysis: true
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_churn_analysis: true
+  include_renewal_forecast: true
+  include_campaign_performance: true
+
+logging:
+  file: "logs/subscription_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
