@@ -1,0 +1,118 @@
+challenges:
+  default_duration_days: 7
+  challenge_templates:
+    steps:
+      name: "Daily Steps Challenge"
+      description: "Walk your way to fitness"
+      unit: "steps"
+      base_value: 10000
+      duration_days: 7
+    distance:
+      name: "Distance Challenge"
+      description: "Cover the distance"
+      unit: "km"
+      base_value: 5
+      duration_days: 7
+    calories:
+      name: "Calorie Burn Challenge"
+      description: "Burn those calories"
+      unit: "calories"
+      base_value: 500
+      duration_days: 7
+    workouts:
+      name: "Workout Challenge"
+      description: "Complete your workouts"
+      unit: "workouts"
+      base_value: 3
+      duration_days: 7
+
+goals:
+  default_duration_days: 30
+  goal_templates:
+    weight_loss:
+      name: "Weight Loss Goal"
+      default_unit: "kg"
+    muscle_gain:
+      name: "Muscle Gain Goal"
+      default_unit: "kg"
+    steps:
+      name: "Daily Steps Goal"
+      default_unit: "steps"
+    distance:
+      name: "Distance Goal"
+      default_unit: "km"
+    calories:
+      name: "Calorie Goal"
+      default_unit: "calories"
+  fitness_levels:
+    beginner:
+      default_goals:
+        - type: "steps"
+          target_value: 5000
+          unit: "steps"
+          duration_days: 30
+        - type: "distance"
+          target_value: 50
+          unit: "km"
+          duration_days: 30
+    intermediate:
+      default_goals:
+        - type: "steps"
+          target_value: 10000
+          unit: "steps"
+          duration_days: 30
+        - type: "distance"
+          target_value: 100
+          unit: "km"
+          duration_days: 30
+        - type: "calories"
+          target_value: 15000
+          unit: "calories"
+          duration_days: 30
+    advanced:
+      default_goals:
+        - type: "steps"
+          target_value: 15000
+          unit: "steps"
+          duration_days: 30
+        - type: "distance"
+          target_value: 150
+          unit: "km"
+          duration_days: 30
+        - type: "calories"
+          target_value: 25000
+          unit: "calories"
+          duration_days: 30
+
+progress:
+  tracking_enabled: true
+
+leaderboard:
+  update_frequency: "daily"
+  ranking_method: "total_progress"
+
+messages:
+  email_enabled: false
+  sms_enabled: false
+  message_templates:
+    motivational:
+      subject: "Keep up the great work!"
+      content: "Hi {name}! You're doing amazing with {progress} progress. Keep pushing forward!"
+    achievement:
+      subject: "Achievement Unlocked!"
+      content: "Congratulations {name}! You've achieved: {achievement}. Keep up the excellent work!"
+    reminder:
+      subject: "Progress Reminder"
+      content: "Hi {name}! Don't forget to log your progress today. Every step counts!"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/fitness_challenge.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

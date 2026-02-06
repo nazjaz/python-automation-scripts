@@ -1,0 +1,1 @@
+"""Fitness challenge automation system."""
