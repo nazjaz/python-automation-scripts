@@ -1,0 +1,62 @@
+monitoring:
+  check_interval_seconds: 60
+  timeout_seconds: 30
+  max_retries: 3
+  retry_delay_seconds: 1
+  user_agent: "API-Performance-Monitor/1.0"
+  follow_redirects: true
+  verify_ssl: true
+
+performance:
+  slow_endpoint_threshold_ms: 1000
+  very_slow_endpoint_threshold_ms: 5000
+  response_time_percentiles:
+    - 50
+    - 75
+    - 90
+    - 95
+    - 99
+  min_requests_for_analysis: 10
+  analysis_window_hours: 24
+
+bottleneck_detection:
+  enabled: true
+  check_response_times: true
+  check_error_rates: true
+  check_throughput: true
+  error_rate_threshold: 0.05
+  throughput_degradation_threshold: 0.20
+  min_samples_for_bottleneck: 20
+
+endpoints:
+  default_method: "GET"
+  default_headers: {}
+  authentication:
+    type: "none"
+    api_key_header: "X-API-Key"
+    bearer_token_header: "Authorization"
+  rate_limiting:
+    enabled: false
+    requests_per_second: 10
+
+optimization:
+  generate_recommendations: true
+  check_caching: true
+  check_compression: true
+  check_pagination: true
+  check_query_optimization: true
+  check_database_queries: true
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  generate_json: true
+  output_directory: "reports"
+  include_charts: true
+  include_recommendations: true
+
+logging:
+  file: "logs/api_performance.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
