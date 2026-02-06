@@ -1,0 +1,85 @@
+categorization:
+  category_keywords:
+    product_quality:
+      - "defective"
+      - "broken"
+      - "damaged"
+      - "quality"
+      - "faulty"
+    billing:
+      - "charge"
+      - "billing"
+      - "invoice"
+      - "payment"
+      - "refund"
+      - "overcharge"
+    shipping:
+      - "delivery"
+      - "shipping"
+      - "late"
+      - "missing"
+      - "package"
+      - "tracking"
+    customer_service:
+      - "service"
+      - "support"
+      - "representative"
+      - "help"
+      - "assistance"
+    technical:
+      - "error"
+      - "bug"
+      - "technical"
+      - "system"
+      - "website"
+      - "app"
+      - "login"
+    account:
+      - "account"
+      - "password"
+      - "access"
+      - "login"
+      - "registration"
+  subcategory_keywords: {}
+
+routing:
+  default_department: "Customer Service"
+  category_mapping:
+    product_quality: "Quality Assurance"
+    billing: "Billing"
+    shipping: "Logistics"
+    customer_service: "Customer Service"
+    technical: "Technical Support"
+    account: "Account Management"
+
+processing:
+  processing_enabled: true
+
+resolution_tracking:
+  tracking_enabled: true
+
+followups:
+  followup_delay_hours: 24
+  followup_templates:
+    satisfaction_survey:
+      message: |
+        Dear {customer_name},
+        
+        Thank you for bringing your concern to our attention. We have resolved your complaint (ID: {complaint_id}).
+        
+        We would appreciate your feedback on how we handled your complaint. Please let us know if you are satisfied with the resolution.
+        
+        Best regards,
+        Customer Service Team
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/complaint_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
