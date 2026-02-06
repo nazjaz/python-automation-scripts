@@ -1,0 +1,72 @@
+expense_policies:
+  max_daily_meal: 75.00
+  max_daily_lodging: 200.00
+  max_daily_transportation: 100.00
+  require_receipt_threshold: 25.00
+  allowed_categories:
+    - "meals"
+    - "lodging"
+    - "transportation"
+    - "office_supplies"
+    - "training"
+    - "other"
+  currency: "USD"
+  tax_deductible: true
+
+receipt_extraction:
+  supported_formats:
+    - "pdf"
+    - "jpg"
+    - "jpeg"
+    - "png"
+  ocr_enabled: true
+  extract_merchant: true
+  extract_date: true
+  extract_amount: true
+  extract_category: true
+  confidence_threshold: 0.7
+
+validation:
+  strict_mode: false
+  allow_overrides: false
+  require_manager_approval_over: 500.00
+  require_receipt_for_all: false
+  validate_dates: true
+  validate_amounts: true
+  check_duplicates: true
+
+reimbursement:
+  calculation_method: "full"
+  tax_rate: 0.0
+  rounding_precision: 2
+  currency_conversion: false
+  prorate_partial_days: false
+
+approval:
+  routing_enabled: true
+  approval_levels:
+    - level: 1
+      max_amount: 100.00
+      approver_role: "manager"
+    - level: 2
+      max_amount: 500.00
+      approver_role: "director"
+    - level: 3
+      max_amount: 999999.99
+      approver_role: "vp"
+  auto_approve_under: 25.00
+  notification_enabled: true
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  generate_pdf: false
+  output_directory: "reports"
+  include_receipts: true
+  include_breakdown: true
+
+logging:
+  file: "logs/expense_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
