@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Review</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            margin-top: 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .rating-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .rating-excellent {
+            background: #28a745;
+            color: white;
+        }
+        .rating-good {
+            background: #17a2b8;
+            color: white;
+        }
+        .rating-satisfactory {
+            background: #ffc107;
+            color: #333;
+        }
+        .rating-needs_improvement {
+            background: #fd7e14;
+            color: white;
+        }
+        .rating-poor {
+            background: #dc3545;
+            color: white;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Performance Review</h1>
+        <p><strong>Employee:</strong> {{ employee.name }}</p>
+        <p><strong>Employee ID:</strong> {{ employee.employee_id }}</p>
+        <p><strong>Department:</strong> {{ employee.department or "N/A" }}</p>
+        <p><strong>Position:</strong> {{ employee.position or "N/A" }}</p>
+        <p><strong>Review Type:</strong> {{ review_type|title }}</p>
+        <p><strong>Review Period:</strong> {{ review_period_start }} to {{ review_period_end }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Overall Performance Rating</h2>
+        <div class="rating-badge rating-{{ performance_score.rating }}">
+            {{ performance_score.rating|title }}
+        </div>
+        <p><strong>Overall Score:</strong> {{ "%.2f"|format(performance_score.overall_score) }} / 1.00</p>
+        
+        {% if performance_score.metric_scores %}
+        <div class="metric-grid">
+            {% for metric_type, score in performance_score.metric_scores.items() %}
+            <div class="metric-card">
+                <div class="metric-label">{{ metric_type|replace('_', ' ')|title }}</div>
+                <div class="metric-value">{{ "%.2f"|format(score) }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="section">
+        <h2>Goal Completion Summary</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Total Goals</td>
+                <td>{{ goal_summary.total_goals }}</td>
+            </tr>
+            <tr>
+                <td>Completed</td>
+                <td>{{ goal_summary.completed }}</td>
+            </tr>
+            <tr>
+                <td>In Progress</td>
+                <td>{{ goal_summary.in_progress }}</td>
+            </tr>
+            <tr>
+                <td>Not Started</td>
+                <td>{{ goal_summary.not_started }}</td>
+            </tr>
+            <tr>
+                <td>Overdue</td>
+                <td>{{ goal_summary.overdue }}</td>
+            </tr>
+            <tr>
+                <td>Average Completion</td>
+                <td>{{ "%.1f"|format(goal_summary.average_completion) }}%</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Strengths</h2>
+        <ul>
+            {% for strength in strengths %}
+            <li>{{ strength }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Areas for Improvement</h2>
+        <ul>
+            {% for area in areas_for_improvement %}
+            <li>{{ area }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if training_needs %}
+    <div class="section">
+        <h2>Training Needs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Skill Category</th>
+                    <th>Skill Name</th>
+                    <th>Priority</th>
+                    <th>Current Level</th>
+                    <th>Target Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for need in training_needs %}
+                <tr>
+                    <td>{{ need.skill_category|replace('_', ' ')|title }}</td>
+                    <td>{{ need.skill_name }}</td>
+                    <td>{{ need.priority|title }}</td>
+                    <td>{{ need.current_level|replace('_', ' ')|title }}</td>
+                    <td>{{ need.target_level|replace('_', ' ')|title }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <h2>Recommendations</h2>
+        <ul>
+            {% for rec in recommendations %}
+            <li>{{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <p><em>Generated on {{ "now"|date:"%Y-%m-%d %H:%M:%S" }}</em></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+performance:
+  metrics:
+    - "productivity"
+    - "quality"
+    - "attendance"
+    - "collaboration"
+    - "innovation"
+  evaluation_period_days: 90
+  min_metrics_for_review: 3
+  performance_thresholds:
+    excellent: 0.90
+    good: 0.75
+    satisfactory: 0.60
+    needs_improvement: 0.40
+
+goals:
+  goal_types:
+    - "quantitative"
+    - "qualitative"
+    - "development"
+    - "project"
+  statuses:
+    - "not_started"
+    - "in_progress"
+    - "completed"
+    - "cancelled"
+    - "overdue"
+  auto_check_interval_days: 7
+  overdue_threshold_days: 7
+
+reviews:
+  review_types:
+    - "quarterly"
+    - "annual"
+    - "mid_year"
+    - "probationary"
+  generate_automatically: true
+  include_metrics: true
+  include_goals: true
+  include_training_needs: true
+  template: "templates/performance_review.html"
+
+training:
+  skill_categories:
+    - "technical"
+    - "soft_skills"
+    - "leadership"
+    - "domain_knowledge"
+  training_types:
+    - "course"
+    - "workshop"
+    - "certification"
+    - "mentoring"
+    - "on_the_job"
+  priority_levels:
+    - "high"
+    - "medium"
+    - "low"
+  identify_based_on:
+    - "performance_gaps"
+    - "goal_requirements"
+    - "career_aspirations"
+    - "skill_assessments"
+
+development_plans:
+  plan_duration_months: 12
+  include_milestones: true
+  include_timeline: true
+  include_resources: true
+  review_frequency_months: 3
+
+reporting:
+  generate_html: true
+  generate_pdf: false
+  output_directory: "reports"
+  include_charts: true
+  include_recommendations: true
+
+logging:
+  file: "logs/performance_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
