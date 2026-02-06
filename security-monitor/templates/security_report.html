@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Monitoring Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #f44336;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .stat-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 5px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-box.critical {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+        .stat-box.open {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+        .stat-box.fixed {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f44336;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .severity-critical {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .severity-high {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .severity-medium {
+            color: #2196F3;
+        }
+        .severity-low {
+            color: #9e9e9e;
+        }
+        .priority-urgent {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .priority-high {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .priority-medium {
+            color: #2196F3;
+        }
+        .priority-low {
+            color: #9e9e9e;
+        }
+        .trend-improving {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .trend-declining {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .trend-stable {
+            color: #9e9e9e;
+        }
+        .meta-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Security Monitoring Report</h1>
+        <div class="meta-info">
+            <strong>Generated at:</strong> {{ generated_at }}
+        </div>
+
+        <div class="section">
+            <h2>Vulnerability Statistics</h2>
+            <div class="stat-box open">
+                <div class="stat-label">Open Vulnerabilities</div>
+                <div class="stat-value">{{ vulnerability_stats.open_vulnerabilities }}</div>
+            </div>
+            <div class="stat-box fixed">
+                <div class="stat-label">Fixed</div>
+                <div class="stat-value">{{ vulnerability_stats.fixed_vulnerabilities }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Total</div>
+                <div class="stat-value">{{ vulnerability_stats.total_vulnerabilities }}</div>
+            </div>
+        </div>
+
+        {% if vulnerability_stats.by_severity %}
+        <div class="section">
+            <h2>Vulnerabilities by Severity</h2>
+            <table>
+                <tr>
+                    <th>Severity</th>
+                    <th>Count</th>
+                </tr>
+                {% for severity, count in vulnerability_stats.by_severity.items() %}
+                <tr>
+                    <td class="severity-{{ severity }}">{{ severity|title }}</td>
+                    <td>{{ count }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if critical_vulnerabilities %}
+        <div class="section">
+            <h2>Critical Vulnerabilities</h2>
+            <table>
+                <tr>
+                    <th>Vulnerability ID</th>
+                    <th>Title</th>
+                    <th>CVSS Score</th>
+                    <th>CVE ID</th>
+                    <th>Component</th>
+                </tr>
+                {% for vuln in critical_vulnerabilities %}
+                <tr>
+                    <td>{{ vuln.vulnerability_id }}</td>
+                    <td>{{ vuln.title }}</td>
+                    <td>{{ "%.1f"|format(vuln.cvss_score or 0) }}</td>
+                    <td>{{ vuln.cve_id or 'N/A' }}</td>
+                    <td>{{ vuln.component or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if overdue_vulnerabilities %}
+        <div class="section">
+            <h2>Overdue Vulnerabilities</h2>
+            <table>
+                <tr>
+                    <th>Vulnerability ID</th>
+                    <th>Title</th>
+                    <th>Severity</th>
+                    <th>Target Fix Date</th>
+                    <th>Days Overdue</th>
+                </tr>
+                {% for vuln in overdue_vulnerabilities %}
+                <tr>
+                    <td>{{ vuln.vulnerability_id }}</td>
+                    <td>{{ vuln.title }}</td>
+                    <td class="severity-{{ vuln.severity }}">{{ vuln.severity|title }}</td>
+                    <td>{{ vuln.target_fix_date.strftime('%Y-%m-%d') if vuln.target_fix_date else 'N/A' }}</td>
+                    <td>{{ vuln.days_overdue }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if prioritized_fixes %}
+        <div class="section">
+            <h2>Prioritized Fixes</h2>
+            <table>
+                <tr>
+                    <th>Vulnerability ID</th>
+                    <th>Title</th>
+                    <th>Severity</th>
+                    <th>Priority Level</th>
+                    <th>Priority Score</th>
+                    <th>Estimated Effort (hours)</th>
+                </tr>
+                {% for fix in prioritized_fixes %}
+                <tr>
+                    <td>{{ fix.vulnerability_id }}</td>
+                    <td>{{ fix.title }}</td>
+                    <td class="severity-{{ fix.severity }}">{{ fix.severity|title }}</td>
+                    <td class="priority-{{ fix.priority_level }}">{{ fix.priority_level|title }}</td>
+                    <td>{{ "%.1f"|format(fix.priority_score) }}</td>
+                    <td>{{ "%.1f"|format(fix.estimated_effort_hours or 0) }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if compliance_trends %}
+        <div class="section">
+            <h2>Compliance Trends</h2>
+            <div class="stat-box">
+                <div class="stat-label">Average Score (30 days)</div>
+                <div class="stat-value">{{ "%.1f"|format(compliance_trends.average_score) }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Trend</div>
+                <div class="stat-value trend-{{ compliance_trends.trend }}">{{ compliance_trends.trend|title }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if timeline_summary %}
+        <div class="section">
+            <h2>Remediation Timeline Summary</h2>
+            <div class="stat-box">
+                <div class="stat-label">Total Timelines</div>
+                <div class="stat-value">{{ timeline_summary.total_timelines }}</div>
+            </div>
+            <div class="stat-box fixed">
+                <div class="stat-label">On Track</div>
+                <div class="stat-value">{{ timeline_summary.on_track }}</div>
+            </div>
+            <div class="stat-box open">
+                <div class="stat-label">At Risk</div>
+                <div class="stat-value">{{ timeline_summary.at_risk }}</div>
+            </div>
+            <div class="stat-box critical">
+                <div class="stat-label">Overdue</div>
+                <div class="stat-value">{{ timeline_summary.overdue }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if upcoming_deadlines %}
+        <div class="section">
+            <h2>Upcoming Fix Deadlines (Next 7 Days)</h2>
+            <table>
+                <tr>
+                    <th>Vulnerability ID</th>
+                    <th>Title</th>
+                    <th>Severity</th>
+                    <th>Target Fix Date</th>
+                    <th>Days Until</th>
+                </tr>
+                {% for deadline in upcoming_deadlines %}
+                <tr>
+                    <td>{{ deadline.vulnerability_id }}</td>
+                    <td>{{ deadline.title }}</td>
+                    <td class="severity-{{ deadline.severity }}">{{ deadline.severity|title }}</td>
+                    <td>{{ deadline.target_fix_date.strftime('%Y-%m-%d') if deadline.target_fix_date else 'N/A' }}</td>
+                    <td>{{ deadline.days_until }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

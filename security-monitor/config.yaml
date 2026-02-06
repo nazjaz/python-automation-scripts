@@ -1,0 +1,51 @@
+scan_monitoring:
+  monitoring_enabled: true
+
+vulnerability_tracking:
+  tracking_enabled: true
+
+fix_prioritization:
+  severity_weights:
+    critical: 10.0
+    high: 7.0
+    medium: 4.0
+    low: 1.0
+  cvss_thresholds:
+    critical: 9.0
+    high: 7.0
+    medium: 4.0
+    low: 0.0
+
+compliance:
+  compliance_thresholds:
+    critical: 0
+    high: 5
+    medium: 20
+    low: 50
+
+remediation:
+  timeline_parameters:
+    critical:
+      days: 1
+      buffer_days: 0
+    high:
+      days: 7
+      buffer_days: 2
+    medium:
+      days: 30
+      buffer_days: 5
+    low:
+      days: 90
+      buffer_days: 10
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/security_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
