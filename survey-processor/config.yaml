@@ -1,0 +1,40 @@
+import:
+  csv_encoding: "utf-8"
+  json_encoding: "utf-8"
+
+analysis:
+  analysis_enabled: true
+
+trends:
+  min_occurrences: 3
+  confidence_threshold: 0.6
+
+satisfaction:
+  rating_questions_weight: 0.7
+  choice_questions_weight: 0.3
+  satisfaction_thresholds:
+    very_satisfied: 4.5
+    satisfied: 3.5
+    neutral: 2.5
+    dissatisfied: 1.5
+    very_dissatisfied: 0.0
+
+summary:
+  summary_template:
+    include_trends: true
+    include_insights: true
+    include_recommendations: true
+    max_trends: 5
+    max_insights: 5
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/survey_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
