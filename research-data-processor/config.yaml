@@ -1,0 +1,95 @@
+data_cleaning:
+  missing_value_strategies:
+    - "drop"
+    - "mean"
+    - "median"
+    - "mode"
+    - "forward_fill"
+    - "backward_fill"
+  outlier_detection:
+    method: "iqr"
+    threshold: 1.5
+    z_score_threshold: 3.0
+  duplicate_handling: "drop"
+  normalization:
+    enabled: false
+    method: "standard"
+  encoding:
+    categorical_encoding: "one_hot"
+    handle_unknown: "ignore"
+
+statistical_analysis:
+  descriptive_stats: true
+  correlation_analysis: true
+  hypothesis_testing: true
+  regression_analysis: true
+  significance_level: 0.05
+  confidence_interval: 0.95
+  tests:
+    - "t_test"
+    - "mann_whitney"
+    - "chi_square"
+    - "anova"
+    - "kruskal_wallis"
+
+visualization:
+  default_style: "publication"
+  figure_formats:
+    - "png"
+    - "pdf"
+    - "svg"
+  dpi: 300
+  figure_size:
+    width: 8
+    height: 6
+  color_palette: "Set2"
+  font_size: 12
+  font_family: "Arial"
+  chart_types:
+    - "scatter"
+    - "line"
+    - "bar"
+    - "histogram"
+    - "boxplot"
+    - "violin"
+    - "heatmap"
+    - "correlation_matrix"
+
+publication:
+  figure_style: "publication"
+  formats:
+    - "png"
+    - "pdf"
+    - "svg"
+  dpi: 300
+  figure_size:
+    single_column: [3.5, 2.5]
+    double_column: [7, 5]
+    full_page: [8.5, 11]
+  color_scheme: "colorblind_friendly"
+  font_settings:
+    family: "Arial"
+    size: 10
+    weight: "normal"
+  axis_settings:
+    linewidth: 1.0
+    tick_length: 4
+    tick_width: 0.5
+  legend_settings:
+    frameon: true
+    fancybox: false
+    shadow: false
+    framealpha: 1.0
+
+output:
+  directory: "output"
+  figures_directory: "figures"
+  reports_directory: "reports"
+  create_subdirectories: true
+  timestamp_files: true
+
+logging:
+  file: "logs/research_data_processor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
