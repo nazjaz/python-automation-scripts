@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Recommendation Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .stat-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 5px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-box.recommendations {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .stat-box.engagement {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .score-high {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .score-medium {
+            color: #ff9800;
+        }
+        .score-low {
+            color: #9e9e9e;
+        }
+        .user-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .meta-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Content Recommendation Report</h1>
+        <div class="meta-info">
+            <strong>Generated at:</strong> {{ generated_at }}
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <div class="stat-box">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value">{{ user_data|length }}</div>
+            </div>
+        </div>
+
+        {% for data in user_data %}
+        <div class="user-section">
+            <h2>User: {{ data.user.username }}</h2>
+            
+            <div class="stat-box recommendations">
+                <div class="stat-label">Total Recommendations</div>
+                <div class="stat-value">{{ data.stats.total_recommendations }}</div>
+            </div>
+            <div class="stat-box engagement">
+                <div class="stat-label">Click Through Rate</div>
+                <div class="stat-value">{{ "%.1f"|format(data.stats.click_through_rate) }}%</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Average Score</div>
+                <div class="stat-value">{{ "%.2f"|format(data.stats.average_score) }}</div>
+            </div>
+
+            {% if data.preferences.total_preferences > 0 %}
+            <h3>Preferences</h3>
+            <p>Total preferences: {{ data.preferences.total_preferences }}</p>
+            <p>Preference types: {{ data.preferences.preference_types|join(', ') }}</p>
+            {% endif %}
+
+            {% if data.history.recent_views > 0 %}
+            <h3>Viewing History (30 days)</h3>
+            <p>Recent views: {{ data.history.recent_views }}</p>
+            <p>Average rating: {{ "%.2f"|format(data.history.average_rating) }}</p>
+            <p>Average completion: {{ "%.1f"|format(data.history.average_completion) }}%</p>
+            {% endif %}
+
+            {% if data.recommendations %}
+            <h3>Top Recommendations</h3>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Content Type</th>
+                    <th>Category</th>
+                    <th>Score</th>
+                    <th>Reason</th>
+                </tr>
+                {% for rec in data.recommendations %}
+                <tr>
+                    <td>{{ rec.title }}</td>
+                    <td>{{ rec.content_type|title if rec.content_type else 'N/A' }}</td>
+                    <td>{{ rec.category|title if rec.category else 'N/A' }}</td>
+                    <td class="score-{{ 'high' if rec.score >= 0.7 else 'medium' if rec.score >= 0.4 else 'low' }}">
+                        {{ "%.2f"|format(rec.score) }}
+                    </td>
+                    <td>{{ rec.reason or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
