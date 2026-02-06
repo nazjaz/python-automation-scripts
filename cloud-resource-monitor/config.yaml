@@ -1,0 +1,89 @@
+monitoring:
+  check_interval_minutes: 15
+  metrics_collection_window_hours: 24
+  resource_types:
+    - "compute"
+    - "storage"
+    - "database"
+    - "network"
+    - "container"
+  metrics:
+    - "cpu_utilization"
+    - "memory_utilization"
+    - "disk_utilization"
+    - "network_io"
+    - "request_count"
+
+idle_detection:
+  enabled: true
+  idle_thresholds:
+    cpu_utilization: 5.0
+    memory_utilization: 10.0
+    network_io: 1.0
+    request_count: 0
+  idle_duration_hours: 24
+  check_all_metrics: true
+  min_samples_for_idle: 10
+
+right_sizing:
+  enabled: true
+  analysis_window_days: 7
+  utilization_thresholds:
+    underutilized: 30.0
+    overutilized: 80.0
+  recommendation_types:
+    - "downsize"
+    - "upsize"
+    - "optimize"
+  min_samples_for_recommendation: 20
+  cost_aware: true
+
+auto_scaling:
+  enabled: false
+  scaling_policies:
+    - "cpu_based"
+    - "memory_based"
+    - "request_based"
+  scale_up_threshold: 75.0
+  scale_down_threshold: 25.0
+  cooldown_period_minutes: 15
+  min_instances: 1
+  max_instances: 10
+  scale_up_increment: 1
+  scale_down_increment: 1
+  require_approval: true
+
+resources:
+  cloud_providers:
+    - "aws"
+    - "azure"
+    - "gcp"
+  resource_states:
+    - "running"
+    - "stopped"
+    - "terminated"
+    - "pending"
+  cost_tracking: true
+
+demand_patterns:
+  analysis_enabled: true
+  pattern_detection:
+    - "daily_cycles"
+    - "weekly_cycles"
+    - "seasonal"
+    - "spike_detection"
+  prediction_window_hours: 24
+  min_data_points: 100
+
+reporting:
+  generate_html: true
+  generate_csv: false
+  output_directory: "reports"
+  include_recommendations: true
+  include_cost_analysis: true
+
+logging:
+  file: "logs/cloud_resource_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
