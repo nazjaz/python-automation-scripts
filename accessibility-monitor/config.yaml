@@ -1,0 +1,59 @@
+accessibility:
+  wcag_version: "2.1"
+  compliance_levels:
+    - "A"
+    - "AA"
+    - "AAA"
+  target_level: "AA"
+  scan_depth: 10
+  max_pages: 50
+  timeout_seconds: 30
+  user_agent: "Mozilla/5.0 (compatible; AccessibilityMonitor/1.0)"
+
+violations:
+  severity_levels:
+    - "critical"
+    - "high"
+    - "medium"
+    - "low"
+  auto_categorize: true
+  include_suggestions: true
+
+scanning:
+  check_images: true
+  check_forms: true
+  check_navigation: true
+  check_keyboard: true
+  check_color_contrast: true
+  check_aria: true
+  check_headings: true
+  check_links: true
+  follow_redirects: true
+  respect_robots_txt: false
+
+remediation:
+  generate_reports: true
+  include_code_examples: true
+  prioritize_by_severity: true
+  track_improvements: true
+
+progress_tracking:
+  track_daily: true
+  track_weekly: true
+  track_monthly: true
+  improvement_threshold: 0.05
+  min_scans_for_trend: 3
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  generate_json: true
+  output_directory: "reports"
+  include_screenshots: false
+  include_violation_details: true
+
+logging:
+  file: "logs/accessibility_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
