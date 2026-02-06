@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Monitoring Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .stat-box {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 5px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-box.conversion {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        .stat-box.sessions {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .priority-urgent {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .priority-high {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .priority-medium {
+            color: #2196F3;
+        }
+        .priority-low {
+            color: #9e9e9e;
+        }
+        .trend-increasing {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .trend-decreasing {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .trend-stable {
+            color: #9e9e9e;
+        }
+        .meta-info {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversion Monitoring Report</h1>
+        <div class="meta-info">
+            <strong>Generated at:</strong> {{ generated_at }}<br>
+            <strong>Website:</strong> {{ website_name }}
+        </div>
+
+        <div class="section">
+            <h2>Conversion Statistics</h2>
+            <div class="stat-box conversion">
+                <div class="stat-label">Conversion Rate</div>
+                <div class="stat-value">{{ "%.2f"|format(conversion_stats.conversion_rate) }}%</div>
+            </div>
+            <div class="stat-box sessions">
+                <div class="stat-label">Total Sessions</div>
+                <div class="stat-value">{{ conversion_stats.total_sessions }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Converted Sessions</div>
+                <div class="stat-value">{{ conversion_stats.converted_sessions }}</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Avg Session Duration</div>
+                <div class="stat-value">{{ "%.0f"|format(conversion_stats.average_session_duration) }}s</div>
+            </div>
+        </div>
+
+        {% if trends %}
+        <div class="section">
+            <h2>Conversion Trends</h2>
+            <div class="stat-box">
+                <div class="stat-label">Average Rate (7 days)</div>
+                <div class="stat-value">{{ "%.2f"|format(trends.average_rate) }}%</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Trend</div>
+                <div class="stat-value trend-{{ trends.trend }}">{{ trends.trend|title }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if top_dropoffs %}
+        <div class="section">
+            <h2>Top Drop-off Points</h2>
+            <table>
+                <tr>
+                    <th>Step Name</th>
+                    <th>Drop-off Rate</th>
+                    <th>Sessions Entered</th>
+                    <th>Sessions Exited</th>
+                </tr>
+                {% for dropoff in top_dropoffs %}
+                <tr>
+                    <td>{{ dropoff.journey_step.step_name if dropoff.journey_step else 'Unknown' }}</td>
+                    <td>{{ "%.1f"|format(dropoff.dropoff_rate * 100) }}%</td>
+                    <td>{{ dropoff.sessions_entered }}</td>
+                    <td>{{ dropoff.sessions_exited }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if top_recommendations %}
+        <div class="section">
+            <h2>Optimization Recommendations</h2>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Priority</th>
+                    <th>Expected Impact</th>
+                    <th>Description</th>
+                </tr>
+                {% for rec in top_recommendations %}
+                <tr>
+                    <td>{{ rec.title }}</td>
+                    <td>{{ rec.recommendation_type|title }}</td>
+                    <td class="priority-{{ rec.priority }}">{{ rec.priority|title }}</td>
+                    <td>{{ "%.2f"|format(rec.expected_impact or 0) }}</td>
+                    <td>{{ rec.description[:100] }}{% if rec.description|length > 100 %}...{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+
+        {% if recent_rates %}
+        <div class="section">
+            <h2>Recent Conversion Rates</h2>
+            <table>
+                <tr>
+                    <th>Time Window Start</th>
+                    <th>Time Window End</th>
+                    <th>Total Sessions</th>
+                    <th>Converted Sessions</th>
+                    <th>Conversion Rate</th>
+                </tr>
+                {% for rate in recent_rates %}
+                <tr>
+                    <td>{{ rate.time_window_start.strftime('%Y-%m-%d %H:%M:%S') if rate.time_window_start else 'N/A' }}</td>
+                    <td>{{ rate.time_window_end.strftime('%Y-%m-%d %H:%M:%S') if rate.time_window_end else 'N/A' }}</td>
+                    <td>{{ rate.total_sessions }}</td>
+                    <td>{{ rate.converted_sessions }}</td>
+                    <td>{{ "%.2f"|format(rate.conversion_rate or 0) }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

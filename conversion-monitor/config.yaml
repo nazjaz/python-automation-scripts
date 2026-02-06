@@ -1,0 +1,36 @@
+monitoring:
+  time_window_hours: 24
+
+events:
+  event_processing_enabled: true
+
+journey_tracking:
+  track_enabled: true
+  max_journey_length: 50
+
+dropoff_detection:
+  min_dropoff_rate: 0.1
+
+recommendations:
+  recommendation_templates:
+    dropoff_optimization:
+      title: "Optimize Drop-off Point"
+      description: "Improve user experience at identified drop-off point"
+    conversion_optimization:
+      title: "Improve Conversion Rate"
+      description: "Focus on optimizing conversion funnel"
+    engagement_optimization:
+      title: "Increase User Engagement"
+      description: "Enhance content and user experience"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/conversion_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
