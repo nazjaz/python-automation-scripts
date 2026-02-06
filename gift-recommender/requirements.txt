@@ -1,0 +1,22 @@
+# Core dependencies
+pydantic==2.5.0  # Data validation and settings management
+pyyaml==6.0.1  # YAML configuration file parsing
+python-dotenv==1.0.0  # Environment variable management
+
+# Database
+sqlalchemy==2.0.23  # Database ORM for gift data storage
+
+# Data analysis
+pandas==2.1.3  # Data manipulation and analysis
+numpy==1.26.2  # Numerical computations for recommendation scoring
+
+# Report generation
+jinja2==3.1.2  # Template engine for HTML reports
+
+# Date handling
+python-dateutil==2.8.2  # Date parsing and manipulation
+
+# Testing
+pytest==7.4.3  # Testing framework
+pytest-cov==4.1.0  # Coverage reporting
+pytest-mock==3.12.0  # Mocking utilities for tests
