@@ -1,0 +1,141 @@
+monitoring:
+  health_check_interval_minutes: 5
+  degraded_threshold: 0.8
+  unhealthy_threshold: 0.5
+
+failure_detection:
+  failure_patterns:
+    timeout:
+      - "timeout"
+      - "timed out"
+      - "connection timeout"
+    connection:
+      - "connection refused"
+      - "connection error"
+      - "connection failed"
+    validation:
+      - "validation error"
+      - "invalid data"
+      - "schema mismatch"
+    data_error:
+      - "data error"
+      - "data corruption"
+      - "missing data"
+  severity_rules:
+    failure_types:
+      timeout: "high"
+      connection: "high"
+      validation: "medium"
+      data_error: "critical"
+
+quality_checks:
+  quality_checks:
+    completeness:
+      type: "completeness"
+      threshold: 0.95
+      required_fields:
+        - "id"
+        - "timestamp"
+        - "value"
+      message_template: "Completeness check: {result:.2%} (threshold: {threshold:.2%})"
+    validity:
+      type: "validity"
+      threshold: 0.90
+      validation_rules:
+        id:
+          type: "not_null"
+        value:
+          type: "range"
+          min: 0
+          max: 1000
+        status:
+          type: "enum"
+          values: ["active", "inactive", "pending"]
+      message_template: "Validity check: {result:.2%} (threshold: {threshold:.2%})"
+    consistency:
+      type: "consistency"
+      threshold: 0.85
+      message_template: "Consistency check: {result:.2%} (threshold: {threshold:.2%})"
+  thresholds:
+    critical: 0.5
+    high: 0.7
+    medium: 0.85
+
+remediation:
+  workflow_templates:
+    timeout:
+      name: "Timeout Remediation"
+      type: "retry"
+      steps:
+        - type: "retry"
+          action: "retry_pipeline"
+        - type: "notify"
+          action: "notify_team"
+    connection:
+      name: "Connection Remediation"
+      type: "restart"
+      steps:
+        - type: "restart"
+          action: "restart_pipeline"
+        - type: "notify"
+          action: "notify_team"
+    validation:
+      name: "Validation Remediation"
+      type: "skip"
+      steps:
+        - type: "skip"
+          action: "skip_failed_records"
+        - type: "notify"
+          action: "notify_team"
+    data_error:
+      name: "Data Error Remediation"
+      type: "rollback"
+      steps:
+        - type: "rollback"
+          action: "rollback_pipeline"
+        - type: "notify"
+          action: "notify_team"
+    default:
+      name: "Default Remediation"
+      type: "generic"
+      steps:
+        - type: "notify"
+          action: "notify_team"
+
+alerting:
+  alert_channels:
+    critical:
+      - type: "email"
+        enabled: true
+      - type: "slack"
+        enabled: true
+      - type: "webhook"
+        enabled: true
+    high:
+      - type: "email"
+        enabled: true
+      - type: "slack"
+        enabled: true
+    medium:
+      - type: "email"
+        enabled: true
+    low:
+      - type: "log"
+        enabled: true
+  email_enabled: false
+  slack_enabled: false
+  webhook_enabled: false
+  alert_rules:
+    min_severity: "medium"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+
+logging:
+  file: "logs/pipeline_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
