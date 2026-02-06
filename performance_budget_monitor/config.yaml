@@ -1,0 +1,47 @@
+performance_data:
+  file_path: "data/performance.csv"
+  format: "csv"
+  timestamp_column: "timestamp"
+  resource_type_column: "resource_type"
+  resource_name_column: "resource_name"
+  consumption_column: "consumption"
+  unit_column: "unit"
+  cost_column: "cost"
+
+budget:
+  budgets:
+    cpu:
+      server_001: 80.0
+      server_002: 80.0
+    memory:
+      server_001: 64.0
+      server_002: 64.0
+    storage:
+      database_001: 1000.0
+    network:
+      api_gateway: 1000.0
+  warning_threshold: 0.8
+  critical_threshold: 0.95
+
+cost:
+  cost_per_unit:
+    cpu:
+      percent: 0.10
+    memory:
+      gb: 0.05
+    storage:
+      gb: 0.01
+    network:
+      mbps: 0.20
+  optimization_cost_threshold: 100.0
+
+optimization:
+  consumption_increase_threshold: 0.2
+  min_data_points: 10
+  lookback_days: 30
+
+analysis:
+  output_format: "markdown"
+  output_path: "logs/performance_analysis.md"
+
+alerts_output_file: "logs/budget_alerts.json"

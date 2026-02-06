@@ -1,0 +1,24 @@
+usage_data:
+  file_path: "data/feature_usage.csv"
+  format: "csv"
+  user_id_column: "user_id"
+  feature_name_column: "feature_name"
+  timestamp_column: "timestamp"
+  event_type_column: "event_type"
+  session_id_column: "session_id"
+
+features:
+  features_file: "data/features.txt"
+  min_usage_threshold: 10
+  adoption_threshold_days: 7
+  unused_threshold_percentage: 0.01
+
+analysis:
+  lookback_days: 30
+  analysis_window_days: 7
+  min_users_for_feature: 5
+
+report:
+  output_format: "markdown"
+  output_path: "logs/feature_usage_report.md"
+  include_top_features: 20

@@ -1,0 +1,27 @@
+ticket_data:
+  file_path: "data/support_tickets.csv"
+  format: "csv"
+  ticket_id_column: "ticket_id"
+  created_time_column: "created_at"
+  resolved_time_column: "resolved_at"
+  priority_column: "priority"
+  category_column: "category"
+
+prediction:
+  lookback_days: 30
+  prediction_horizon_days: 7
+  peak_threshold_multiplier: 1.5
+  time_window_hours: 1
+
+staffing:
+  avg_tickets_per_agent_per_hour: 5.0
+  min_agents_per_shift: 2
+  max_agents_per_shift: 20
+  shift_duration_hours: 8
+  cost_per_agent_per_hour: 25.0
+  target_service_level: 0.80
+
+report:
+  output_format: "markdown"
+  include_charts: true
+  output_path: "logs/capacity_planning_report.md"

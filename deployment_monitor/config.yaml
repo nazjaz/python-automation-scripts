@@ -1,0 +1,25 @@
+deployment_data:
+  file_path: "data/deployments.csv"
+  format: "csv"
+  deployment_id_column: "deployment_id"
+  timestamp_column: "timestamp"
+  status_column: "status"
+  environment_column: "environment"
+  version_column: "version"
+  duration_column: "duration_seconds"
+  error_message_column: "error_message"
+
+regression:
+  lookback_window_days: 30
+  comparison_window_days: 7
+  success_rate_threshold: 0.05
+  failure_rate_threshold: 0.20
+
+metrics:
+  mttr_window_days: 30
+  deployment_frequency_window_days: 7
+  change_failure_rate_window_days: 30
+
+report:
+  output_format: "markdown"
+  output_path: "logs/deployment_metrics.md"

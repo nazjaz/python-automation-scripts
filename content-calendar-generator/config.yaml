@@ -1,0 +1,190 @@
+# Content Calendar Generator Configuration
+
+# Application Settings
+app:
+  name: Content Calendar Generator
+  version: 1.0.0
+  timezone: America/New_York
+
+# Calendar Generation Settings
+calendar:
+  # Number of weeks to generate calendar for
+  weeks_ahead: 4
+  # Default posts per day
+  posts_per_day: 2
+  # Content types to include
+  content_types:
+    - blog_post
+    - social_media
+    - video
+    - image
+    - infographic
+    - quote
+    - announcement
+  # Content mix percentages (must sum to 100)
+  content_mix:
+    blog_post: 20
+    social_media: 30
+    video: 15
+    image: 15
+    infographic: 10
+    quote: 5
+    announcement: 5
+
+# Platform Settings
+platforms:
+  facebook:
+    enabled: true
+    optimal_times:
+      - day: monday
+        hours: [9, 13, 17]
+      - day: tuesday
+        hours: [9, 13, 17]
+      - day: wednesday
+        hours: [9, 13, 17]
+      - day: thursday
+        hours: [9, 13, 17]
+      - day: friday
+        hours: [9, 13, 17]
+      - day: saturday
+        hours: [10, 14]
+      - day: sunday
+        hours: [10, 14]
+    posts_per_day: 2
+  twitter:
+    enabled: true
+    optimal_times:
+      - day: monday
+        hours: [8, 12, 16, 20]
+      - day: tuesday
+        hours: [8, 12, 16, 20]
+      - day: wednesday
+        hours: [8, 12, 16, 20]
+      - day: thursday
+        hours: [8, 12, 16, 20]
+      - day: friday
+        hours: [8, 12, 16, 20]
+      - day: saturday
+        hours: [9, 13, 17]
+      - day: sunday
+        hours: [9, 13, 17]
+    posts_per_day: 4
+  instagram:
+    enabled: true
+    optimal_times:
+      - day: monday
+        hours: [11, 14, 19]
+      - day: tuesday
+        hours: [11, 14, 19]
+      - day: wednesday
+        hours: [11, 14, 19]
+      - day: thursday
+        hours: [11, 14, 19]
+      - day: friday
+        hours: [11, 14, 19]
+      - day: saturday
+        hours: [10, 13, 18]
+      - day: sunday
+        hours: [10, 13, 18]
+    posts_per_day: 1
+  linkedin:
+    enabled: true
+    optimal_times:
+      - day: monday
+        hours: [8, 12, 17]
+      - day: tuesday
+        hours: [8, 12, 17]
+      - day: wednesday
+        hours: [8, 12, 17]
+      - day: thursday
+        hours: [8, 12, 17]
+      - day: friday
+        hours: [8, 12, 17]
+      - day: saturday
+        hours: [9, 13]
+      - day: sunday
+        hours: [9, 13]
+    posts_per_day: 1
+
+# Audience Engagement Analysis
+engagement:
+  # Historical data analysis period (days)
+  analysis_period_days: 90
+  # Engagement metrics to track
+  metrics:
+    - likes
+    - comments
+    - shares
+    - clicks
+    - impressions
+    - reach
+  # Weight for each metric in engagement score
+  metric_weights:
+    likes: 0.2
+    comments: 0.3
+    shares: 0.25
+    clicks: 0.15
+    impressions: 0.05
+    reach: 0.05
+  # Minimum engagement threshold
+  min_engagement_threshold: 10
+
+# Content Performance Analysis
+performance:
+  # Performance analysis period (days)
+  analysis_period_days: 90
+  # Performance metrics
+  metrics:
+    - engagement_rate
+    - click_through_rate
+    - conversion_rate
+    - reach_rate
+  # Content performance thresholds
+  thresholds:
+    high_performance: 0.05
+    medium_performance: 0.02
+    low_performance: 0.01
+
+# Optimal Posting Time Analysis
+posting_times:
+  # Analysis period (days)
+  analysis_period_days: 90
+  # Time slots to analyze (hours)
+  time_slots:
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+  # Minimum posts required for analysis
+  min_posts_per_slot: 5
+
+# Scheduling Settings
+scheduling:
+  # Auto-schedule posts
+  auto_schedule: false
+  # Buffer time before posting (minutes)
+  buffer_minutes: 15
+  # Retry failed posts
+  retry_failed: true
+  # Max retry attempts
+  max_retries: 3
+
+# Logging Configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: logs/content_calendar.log
+  max_bytes: 10485760
+  backup_count: 5

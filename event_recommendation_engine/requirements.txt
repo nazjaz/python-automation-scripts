@@ -1,0 +1,6 @@
+pandas==2.2.0  # Data manipulation and CSV processing
+PyYAML==6.0.1  # YAML configuration file parsing
+pydantic==2.5.3  # Data validation and settings management
+pydantic-settings==2.1.0  # Settings management from environment variables
+icalendar==5.0.11  # Calendar integration (ICS file format)
+numpy==1.26.3  # Numerical operations (pandas dependency)

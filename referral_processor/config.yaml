@@ -1,0 +1,36 @@
+referral_data:
+  file_path: "data/referrals.csv"
+  format: "csv"
+  referral_id_column: "referral_id"
+  referrer_id_column: "referrer_id"
+  referee_id_column: "referee_id"
+  referral_date_column: "referral_date"
+  referral_source_column: "source"
+  conversion_status_column: "conversion_status"
+  conversion_date_column: "conversion_date"
+
+customer_data_file: "data/customers.csv"
+
+reward:
+  base_reward_amount: 10.0
+  conversion_bonus: 25.0
+  reward_currency: "USD"
+  min_referrals_for_bonus: 5
+  bonus_multiplier: 1.5
+  require_conversion: true
+
+notification:
+  enabled: true
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  smtp_username: null
+  smtp_password: null
+  from_email: null
+  message_template: "Thank you for your referral! You have earned {reward_amount} {currency}."
+
+analytics:
+  output_format: "markdown"
+  output_path: "logs/referral_analytics.md"
+  include_top_referrers: 10
+
+rewards_output_file: "logs/rewards.json"

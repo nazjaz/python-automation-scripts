@@ -1,0 +1,40 @@
+warranty_data:
+  file_path: "data/warranties.csv"
+  format: "csv"
+  warranty_id_column: "warranty_id"
+  customer_id_column: "customer_id"
+  product_id_column: "product_id"
+  purchase_date_column: "purchase_date"
+  warranty_start_date_column: "warranty_start_date"
+  warranty_duration_months_column: "warranty_duration_months"
+  coverage_type_column: "coverage_type"
+
+claim_data:
+  file_path: "data/claims.csv"
+  format: "csv"
+  claim_id_column: "claim_id"
+  warranty_id_column: "warranty_id"
+  claim_date_column: "claim_date"
+  issue_description_column: "issue_description"
+  status_column: "status"
+  service_provider_column: "service_provider"
+  claim_amount_column: "claim_amount"
+
+service_provider:
+  file_path: "data/service_providers.csv"
+  format: "csv"
+  provider_id_column: "provider_id"
+  provider_name_column: "provider_name"
+  service_areas_column: "service_areas"
+  capacity_column: "capacity"
+
+validation:
+  require_active_warranty: true
+  validate_coverage_type: true
+  auto_approve_threshold: 500.0
+
+analytics:
+  output_format: "markdown"
+  output_path: "logs/warranty_analytics.md"
+
+claims_output_file: "logs/processed_claims.json"

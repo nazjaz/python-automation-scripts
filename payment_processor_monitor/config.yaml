@@ -1,0 +1,38 @@
+payment_data:
+  file_path: "data/payments.csv"
+  format: "csv"
+  payment_id_column: "payment_id"
+  customer_id_column: "customer_id"
+  amount_column: "amount"
+  status_column: "status"
+  timestamp_column: "timestamp"
+  failure_reason_column: "failure_reason"
+  retry_count_column: "retry_count"
+
+customer_data_file: "data/customers.csv"
+
+retry:
+  enabled: true
+  max_retries: 3
+  retry_delay_days: 3
+  reminder_template: "Your payment of {amount} {currency} failed. Please update your payment method."
+
+notification:
+  enabled: true
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  smtp_username: null
+  smtp_password: null
+  from_email: null
+  customer_email_column: "email"
+
+forecasting:
+  forecast_days: 30
+  lookback_days: 90
+  method: "moving_average"
+
+analytics:
+  output_format: "markdown"
+  output_path: "logs/payment_analytics.md"
+
+failed_payments_output: "logs/failed_payments.json"

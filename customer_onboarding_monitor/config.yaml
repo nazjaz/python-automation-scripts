@@ -1,0 +1,29 @@
+data_path: "./data/onboarding_events.csv"
+output_path: "./logs/onboarding_analysis.md"
+
+customer_id_column: "customer_id"
+event_time_column: "event_time"
+stage_column: "stage"
+
+time_to_value_event: "value_realized"
+
+stages:
+  - name: "signup_started"
+    display_name: "Signup Started"
+    target_completion_rate: 0.95
+    target_time_to_complete_hours: 1.0
+
+  - name: "profile_completed"
+    display_name: "Profile Completed"
+    target_completion_rate: 0.9
+    target_time_to_complete_hours: 4.0
+
+  - name: "first_use"
+    display_name: "First Product Use"
+    target_completion_rate: 0.8
+    target_time_to_complete_hours: 24.0
+
+  - name: "value_realized"
+    display_name: "Value Realized"
+    target_completion_rate: 0.7
+    target_time_to_complete_hours: 72.0

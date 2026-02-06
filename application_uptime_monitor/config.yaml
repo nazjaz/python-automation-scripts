@@ -1,0 +1,37 @@
+regions:
+  - name: "us-east-1"
+    instances:
+      - "https://api-us-east.example.com"
+      - "https://api-us-east-2.example.com"
+    health_check_endpoint: "/health"
+    health_check_timeout: 5.0
+    priority: 1
+
+  - name: "us-west-2"
+    instances:
+      - "https://api-us-west.example.com"
+    health_check_endpoint: "/health"
+    health_check_timeout: 5.0
+    priority: 2
+
+  - name: "eu-west-1"
+    instances:
+      - "https://api-eu-west.example.com"
+    health_check_endpoint: "/health"
+    health_check_timeout: 5.0
+    priority: 3
+
+performance:
+  max_response_time_ms: 500.0
+  min_success_rate: 0.95
+  degradation_window_minutes: 5
+  consecutive_failures_threshold: 3
+
+routing:
+  routing_strategy: "priority"
+  failover_enabled: true
+  health_check_interval_seconds: 30
+  metrics_retention_hours: 24
+
+metrics_file: "logs/metrics.json"
+routing_state_file: "logs/routing_state.json"

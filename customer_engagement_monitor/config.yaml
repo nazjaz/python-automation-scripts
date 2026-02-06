@@ -1,0 +1,32 @@
+engagement_data:
+  file_path: "data/engagement.csv"
+  format: "csv"
+  customer_id_column: "customer_id"
+  touchpoint_column: "touchpoint"
+  timestamp_column: "timestamp"
+  engagement_score_column: "engagement_score"
+
+purchase_data:
+  file_path: "data/purchases.csv"
+  format: "csv"
+  customer_id_column: "customer_id"
+  purchase_date_column: "purchase_date"
+  amount_column: "amount"
+
+ltv:
+  discount_rate: 0.1
+  average_customer_lifespan_years: 3.0
+  lookback_months: 12
+
+segmentation:
+  ltv_threshold_high: 1000.0
+  ltv_threshold_medium: 500.0
+  engagement_threshold_high: 0.7
+  engagement_threshold_low: 0.3
+  recency_threshold_days: 90
+
+strategy:
+  max_recommendations_per_segment: 5
+
+output_file: "logs/engagement_analysis.json"
+report_file: "logs/engagement_report.md"

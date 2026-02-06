@@ -1,0 +1,4 @@
+requests==2.31.0  # HTTP library for health check requests
+PyYAML==6.0.1  # YAML configuration file parsing
+pydantic==2.5.3  # Data validation and settings management
+pydantic-settings==2.1.0  # Settings management from environment variables

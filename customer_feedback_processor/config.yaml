@@ -1,0 +1,78 @@
+sources:
+  - name: "support_tickets"
+    path: "data/support_feedback.csv"
+    format: "csv"
+    text_column: "feedback_text"
+    metadata_columns:
+      - "ticket_id"
+      - "date"
+      - "category"
+
+  - name: "app_reviews"
+    path: "data/app_reviews.json"
+    format: "json"
+    text_column: "review_text"
+    metadata_columns:
+      - "rating"
+      - "date"
+      - "user_id"
+
+  - name: "survey_responses"
+    path: "data/survey_feedback.txt"
+    format: "txt"
+
+theme:
+  min_occurrences: 3
+  min_keyword_length: 3
+  stop_words:
+    - "the"
+    - "a"
+    - "an"
+    - "and"
+    - "or"
+    - "but"
+    - "in"
+    - "on"
+    - "at"
+    - "to"
+    - "for"
+    - "of"
+    - "with"
+    - "by"
+    - "is"
+    - "are"
+    - "was"
+    - "were"
+    - "be"
+    - "been"
+    - "have"
+    - "has"
+    - "had"
+    - "do"
+    - "does"
+    - "did"
+    - "will"
+    - "would"
+    - "should"
+    - "could"
+    - "this"
+    - "that"
+    - "these"
+    - "those"
+    - "it"
+    - "its"
+    - "they"
+    - "them"
+    - "we"
+    - "us"
+    - "you"
+    - "your"
+    - "my"
+    - "our"
+
+roadmap:
+  high_priority_threshold: 0.15
+  medium_priority_threshold: 0.05
+  max_recommendations: 20
+
+output_path: "logs/feedback_analysis.md"

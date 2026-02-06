@@ -1,0 +1,57 @@
+testimonial_data:
+  file_path: "data/testimonials.csv"
+  format: "csv"
+  testimonial_id_column: "testimonial_id"
+  customer_name_column: "customer_name"
+  testimonial_text_column: "testimonial_text"
+  product_column: "product"
+  category_column: "category"
+  rating_column: "rating"
+  date_column: "date"
+
+quote_extraction:
+  min_quote_length: 20
+  max_quote_length: 500
+  extract_full_sentences: true
+  quote_indicators:
+    - '"'
+    - "'"
+    - "said"
+    - "says"
+    - "stated"
+
+categorization:
+  product_keywords:
+    Product A:
+      - "product a"
+      - "feature x"
+      - "solution y"
+    Product B:
+      - "product b"
+      - "feature z"
+  service_keywords:
+    Consulting:
+      - "consulting"
+      - "advice"
+      - "guidance"
+    Support:
+      - "support"
+      - "help"
+      - "assistance"
+  auto_categorize: true
+
+marketing:
+  output_formats:
+    - "markdown"
+    - "html"
+  include_customer_name: true
+  include_rating: true
+  include_date: false
+  template_path: null
+
+permission:
+  permission_file: "logs/permissions.json"
+  default_permission_status: "not_requested"
+  require_permission_for_use: true
+
+output_directory: "logs/marketing_materials"

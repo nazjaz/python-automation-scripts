@@ -1,0 +1,55 @@
+users:
+  - user_id: "user_001"
+    interests:
+      - "technology"
+      - "programming"
+      - "software development"
+    location:
+      latitude: 37.7749
+      longitude: -122.4194
+    max_travel_distance_km: 25.0
+    preferred_event_types:
+      - "conference"
+      - "workshop"
+      - "meetup"
+    email: "user@example.com"
+
+  - user_id: "user_002"
+    interests:
+      - "music"
+      - "jazz"
+      - "live performance"
+    location:
+      latitude: 40.7128
+      longitude: -74.0060
+    max_travel_distance_km: 30.0
+    preferred_event_types:
+      - "concert"
+      - "festival"
+    email: "user2@example.com"
+
+events_file: "data/events.csv"
+past_attendance_file: "data/past_attendance.csv"
+
+recommendation:
+  interest_weight: 0.4
+  location_weight: 0.3
+  past_attendance_weight: 0.3
+  max_recommendations: 10
+  min_score_threshold: 0.3
+
+calendar:
+  calendar_file: "logs/user_calendar.ics"
+  auto_add_recommendations: false
+
+notification:
+  enabled: true
+  reminder_hours_before:
+    - 24
+    - 2
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  smtp_username: null
+  smtp_password: null
+
+output_file: "logs/recommendations.json"

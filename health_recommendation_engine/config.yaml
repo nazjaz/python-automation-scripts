@@ -1,0 +1,39 @@
+activity_data:
+  file_path: "data/activity.csv"
+  format: "csv"
+  date_column: "date"
+  steps_column: "steps"
+  calories_column: "calories"
+  active_minutes_column: "active_minutes"
+  distance_column: "distance"
+
+sleep_data:
+  file_path: "data/sleep.csv"
+  format: "csv"
+  date_column: "date"
+  sleep_hours_column: "sleep_hours"
+  sleep_quality_column: "sleep_quality"
+  bedtime_column: "bedtime"
+  wake_time_column: "wake_time"
+
+health_metrics:
+  file_path: "data/health_metrics.csv"
+  format: "csv"
+  date_column: "date"
+  weight_column: "weight"
+  heart_rate_column: "heart_rate"
+  blood_pressure_column: "blood_pressure"
+
+recommendation:
+  target_steps_per_day: 10000
+  target_sleep_hours: 7.5
+  min_sleep_hours: 7.0
+  max_sleep_hours: 9.0
+  target_active_minutes: 30
+
+goal:
+  goals_file: "data/goals.json"
+  progress_file: "logs/goals_progress.json"
+
+output_file: "logs/health_recommendations.json"
+report_file: "logs/health_report.md"
