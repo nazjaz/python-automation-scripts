@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup Health Report</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .location {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .location h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .health-score {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .health-score.good {
+            color: #28a745;
+        }
+        .health-score.warning {
+            color: #ffc107;
+        }
+        .health-score.critical {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Backup Health Report</h1>
+        <p>Generated on {{ generated_at }} - Last {{ days }} days</p>
+    </div>
+
+    {% for location in locations %}
+    <div class="location">
+        <h2>{{ location.name }}</h2>
+        <p><strong>Path:</strong> {{ location.path }} | <strong>Type:</strong> {{ location.type }}</p>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-label">Total Backups</div>
+                <div class="metric-value">{{ location.total_backups }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Successful</div>
+                <div class="metric-value">{{ location.successful_backups }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Failed</div>
+                <div class="metric-value">{{ location.failed_backups }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Success Rate</div>
+                <div class="metric-value">{{ "%.1f"|format(location.success_rate * 100) }}%</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Total Size</div>
+                <div class="metric-value">{{ "%.2f"|format(location.total_size_gb) }} GB</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Health Score</div>
+                <div class="health-score {% if location.health_score >= 0.8 %}good{% elif location.health_score >= 0.5 %}warning{% else %}critical{% endif %}">
+                    {{ "%.1f"|format(location.health_score * 100) }}%
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+</html>

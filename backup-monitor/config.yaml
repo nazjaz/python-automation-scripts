@@ -1,0 +1,66 @@
+backups:
+  locations:
+    - name: "database_backup"
+      path: "/backups/database"
+      type: "database"
+      schedule: "daily"
+      retention_days: 30
+      verify_integrity: true
+      test_restore: true
+    - name: "file_backup"
+      path: "/backups/files"
+      type: "file"
+      schedule: "daily"
+      retention_days: 90
+      verify_integrity: true
+      test_restore: false
+  default_retention_days: 30
+  verification:
+    enabled: true
+    methods:
+      - "checksum"
+      - "size_validation"
+      - "timestamp_validation"
+    checksum_algorithm: "sha256"
+  restore_testing:
+    enabled: true
+    test_frequency_days: 7
+    test_location: "test_backups"
+    cleanup_after_test: true
+
+monitoring:
+  check_interval_minutes: 60
+  health_check_enabled: true
+  failure_threshold: 3
+  alert_on_failure: true
+  alert_on_verification_failure: true
+  alert_on_restore_failure: true
+
+alerts:
+  email:
+    enabled: false
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    from_email: "backup-monitor@example.com"
+    to_emails: []
+  slack:
+    enabled: false
+    webhook_url: ""
+  log:
+    enabled: true
+    level: "ERROR"
+
+reporting:
+  generate_html: true
+  generate_csv: true
+  output_directory: "reports"
+  include_charts: true
+  report_frequency: "daily"
+  include_verification_results: true
+  include_restore_test_results: true
+
+logging:
+  file: "logs/backup_monitor.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
