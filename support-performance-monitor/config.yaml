@@ -1,0 +1,63 @@
+support:
+  response_time_thresholds:
+    first_response_minutes: 60
+    resolution_hours: 24
+    sla_target_percentage: 95.0
+  ticket_categories:
+    - "technical"
+    - "billing"
+    - "account"
+    - "general"
+    - "bug"
+    - "feature_request"
+  priority_levels:
+    - "low"
+    - "medium"
+    - "high"
+    - "urgent"
+  statuses:
+    - "open"
+    - "in_progress"
+    - "waiting_customer"
+    - "resolved"
+    - "closed"
+
+monitoring:
+  check_interval_minutes: 15
+  track_response_times: true
+  track_resolution_rates: true
+  identify_bottlenecks: true
+  alert_on_sla_breach: true
+
+performance:
+  metrics_window_days: 30
+  resolution_rate_target: 0.85
+  average_response_time_target_minutes: 30
+  bottleneck_threshold_percentage: 20.0
+
+bottleneck_detection:
+  enabled: true
+  check_categories: true
+  check_agents: true
+  check_time_periods: true
+  min_tickets_for_analysis: 10
+
+dashboard:
+  generate_html: true
+  generate_csv: true
+  output_directory: "dashboards"
+  include_charts: true
+  refresh_interval_minutes: 60
+  metrics_to_display:
+    - "response_times"
+    - "resolution_rates"
+    - "ticket_volume"
+    - "sla_compliance"
+    - "bottlenecks"
+    - "agent_performance"
+
+logging:
+  file: "logs/support_performance.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
