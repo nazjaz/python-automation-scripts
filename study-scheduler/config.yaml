@@ -1,0 +1,55 @@
+scheduling:
+  default_study_hours_per_day: 4
+  max_study_hours_per_day: 8
+  min_study_hours_per_day: 1
+  preferred_study_times:
+    - "09:00"
+    - "14:00"
+    - "19:00"
+  study_session_duration_minutes: 90
+  break_duration_minutes: 15
+  days_before_exam_buffer: 2
+
+learning_preferences:
+  study_styles:
+    - "visual"
+    - "auditory"
+    - "kinesthetic"
+    - "reading_writing"
+  preferred_difficulty_progression: "gradual"
+  review_frequency_days: 7
+  active_recall_enabled: true
+  spaced_repetition_enabled: true
+
+progress_tracking:
+  track_daily: true
+  track_weekly: true
+  completion_threshold: 0.8
+  adjustment_threshold: 0.6
+  min_sessions_for_analysis: 5
+
+recommendations:
+  enabled: true
+  check_interval_days: 3
+  suggest_schedule_adjustments: true
+  suggest_learning_methods: true
+  suggest_time_management: true
+
+courses:
+  default_difficulty: "medium"
+  difficulty_levels:
+    - "easy"
+    - "medium"
+    - "hard"
+  default_priority: "medium"
+  priority_levels:
+    - "low"
+    - "medium"
+    - "high"
+    - "critical"
+
+logging:
+  file: "logs/study_scheduler.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

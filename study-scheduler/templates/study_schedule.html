@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Study Schedule</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            margin-top: 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .status-completed {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-partial {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .status-incomplete {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .status-scheduled {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        .progress-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .progress-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        .progress-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .progress-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Study Schedule</h1>
+        <p>Period: {{ start_date }} to {{ end_date }}</p>
+        <p>Generated: {{ generated_at }}</p>
+    </div>
+
+    {% if exams %}
+    <div class="section">
+        <h2>Upcoming Exams</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Exam</th>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Days Until</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in exams %}
+                <tr>
+                    <td>{{ exam.name }}</td>
+                    <td>{{ exam.course_name }}</td>
+                    <td>{{ exam.exam_date }}</td>
+                    <td>
+                        {% if exam.days_until <= 7 %}
+                        <strong style="color: #dc3545;">{{ exam.days_until }} days</strong>
+                        {% elif exam.days_until <= 14 %}
+                        <strong style="color: #ffc107;">{{ exam.days_until }} days</strong>
+                        {% else %}
+                        {{ exam.days_until }} days
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if weekly_progress %}
+    <div class="section">
+        <h2>Weekly Progress Summary</h2>
+        <div class="progress-summary">
+            <div class="progress-card">
+                <div class="progress-label">Scheduled Sessions</div>
+                <div class="progress-value">{{ weekly_progress.scheduled_sessions }}</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-label">Completed Sessions</div>
+                <div class="progress-value">{{ weekly_progress.completed_sessions }}</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-label">Completion Rate</div>
+                <div class="progress-value">{{ "%.1f"|format(weekly_progress.completion_rate * 100) }}%</div>
+            </div>
+            <div class="progress-card">
+                <div class="progress-label">Total Hours</div>
+                <div class="progress-value">{{ "%.1f"|format(weekly_progress.total_hours) }}</div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="section">
+        <h2>Study Sessions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Course</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Topics</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td>{{ session.date }}</td>
+                    <td>{{ session.course_name }}</td>
+                    <td>{{ session.start_time }} - {{ session.end_time }}</td>
+                    <td>{{ session.duration_minutes }} min</td>
+                    <td>{{ session.topics }}</td>
+                    <td class="status-{{ session.status }}">{{ session.status|title }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
