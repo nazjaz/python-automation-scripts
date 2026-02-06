@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendee List - {{ event_name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f5f5f5;
+            font-weight: bold;
+        }
+        .waitlist {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ event_name }}</h1>
+        <p>Date: {{ event_date }} | Location: {{ event_location }}</p>
+        <p>Generated: {{ generated_at }}</p>
+    </div>
+
+    <h2>Confirmed Attendees ({{ total_attendees }})</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Company</th>
+                <th>Phone</th>
+                <th>Ticket Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendee in attendees %}
+            <tr>
+                <td>{{ attendee.name }}</td>
+                <td>{{ attendee.email }}</td>
+                <td>{{ attendee.company }}</td>
+                <td>{{ attendee.phone }}</td>
+                <td>{{ attendee.ticket_type }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if waitlist %}
+    <div class="waitlist">
+        <h2>Waitlist ({{ total_waitlist }})</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in waitlist %}
+                <tr>
+                    <td>{{ person.position }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.company }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+events:
+  default_capacity: 100
+  allow_waitlist: true
+  auto_confirm: true
+  require_payment: false
+
+registration:
+  confirmation_email:
+    enabled: true
+    subject: "Event Registration Confirmation - {{event_name}}"
+    template: "templates/confirmation_email.html"
+  waitlist_email:
+    enabled: true
+    subject: "Waitlist Notification - {{event_name}}"
+    template: "templates/waitlist_email.html"
+  fields:
+    - "name"
+    - "email"
+    - "company"
+    - "phone"
+    - "dietary_restrictions"
+    - "special_requests"
+
+badges:
+  enabled: true
+  template: "templates/badge_template.html"
+  output_directory: "badges"
+  format: "html"
+  include_qr_code: false
+  fields:
+    - "name"
+    - "company"
+    - "ticket_type"
+
+waitlist:
+  auto_promote: true
+  promotion_notification: true
+  max_waitlist_size: 50
+
+email:
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  from_email: "events@example.com"
+  from_name: "Event Registration System"
+  retry_attempts: 3
+  retry_delay_seconds: 5
+
+logging:
+  file: "logs/event_registration.log"
+  max_bytes: 10485760
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

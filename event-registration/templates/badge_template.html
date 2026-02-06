@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @media print {
+            @page { size: 3.375in 2.125in; margin: 0; }
+            body { margin: 0; }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            width: 3.375in;
+            height: 2.125in;
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            border: 2px solid #667eea;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: white;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .company {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .ticket-type {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 5px;
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        .event-name {
+            font-size: 10px;
+            color: #999;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="name">{{ name }}</div>
+    {% if company %}
+    <div class="company">{{ company }}</div>
+    {% endif %}
+    {% if ticket_type %}
+    <div class="ticket-type">{{ ticket_type }}</div>
+    {% endif %}
+    <div class="event-name">{{ event_name }}</div>
+</body>
+</html>

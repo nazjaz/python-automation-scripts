@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #667eea; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+        .content { padding: 20px; background: #f9f9f9; border-radius: 0 0 8px 8px; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .info-box { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #667eea; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Registration Confirmed!</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{ registrant_name }},</p>
+            <p>Your registration for <strong>{{ event_name }}</strong> has been confirmed.</p>
+            <div class="info-box">
+                <p><strong>Event Details:</strong></p>
+                <ul>
+                    <li>Date: {{ event_date }}</li>
+                    <li>Location: {{ event_location }}</li>
+                </ul>
+            </div>
+            <p>We look forward to seeing you at the event!</p>
+            <p>If you have any questions, please contact us.</p>
+        </div>
+        <div class="footer">
+            <p>This is an automated confirmation email.</p>
+            <p>Registration ID: {{ registration_id }}</p>
+        </div>
+    </div>
+</body>
+</html>
